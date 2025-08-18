@@ -28,17 +28,17 @@ mouse_filter = 2
 texture = ExtResource("3_id520")
 
 [node name="Timeskip" type="Button" parent="."]
-offset_left = 237.0
-offset_top = 76.0
-offset_right = 450.0
-offset_bottom = 125.0
+offset_left = 488.0
+offset_top = 136.0
+offset_right = 701.0
+offset_bottom = 185.0
 text = "SKIP 1 MONTH"
 script = ExtResource("4_61481")
 
 [node name="DialogueTester" type="Button" parent="."]
-offset_left = 286.0
-offset_top = 47.0
-offset_right = 418.0
-offset_bottom = 78.0
+offset_left = 528.0
+offset_top = 192.0
+offset_right = 660.0
+offset_bottom = 223.0
 text = "dialogue output"
 script = ExtResource("5_ku7un")

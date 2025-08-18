@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://besgkknelux7n"
-path="res://.godot/imported/placeholdercampsprite.png-39ce5642488dbbfd4439f8da03860f04.ctex"
+uid="uid://c3jqy6k5fk4ff"
+path="res://.godot/imported/meadowcamp1.png-30803864edb58770ba85226de2b91ca1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/placeholdercampsprite.png"
-dest_files=["res://.godot/imported/placeholdercampsprite.png-39ce5642488dbbfd4439f8da03860f04.ctex"]
+source_file="res://sprites/meadowcamp1.png"
+dest_files=["res://.godot/imported/meadowcamp1.png-30803864edb58770ba85226de2b91ca1.ctex"]
 
 [params]
 
