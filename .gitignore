@@ -3,8 +3,10 @@
 
 ### Godot ###
 # Godot 4+ specific ignores
+.rsrc/
 .godot/
 /android/
+bin/
 
 # Godot-specific ignores
 .import/
