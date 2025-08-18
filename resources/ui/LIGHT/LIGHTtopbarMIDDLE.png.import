@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dg3o57hoy7eel"
-path="res://.godot/imported/LIGHTbackground.png-1885ab1a8e283f0b46163b04ae077a8c.ctex"
+uid="uid://dhmq03cc6pr2i"
+path="res://.godot/imported/LIGHTtopbarMIDDLE.png-0e54631e5b7cc08d8f34b91d0b550eb5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/ui/LIGHTbackground.png"
-dest_files=["res://.godot/imported/LIGHTbackground.png-1885ab1a8e283f0b46163b04ae077a8c.ctex"]
+source_file="res://resources/ui/LIGHT/LIGHTtopbarMIDDLE.png"
+dest_files=["res://.godot/imported/LIGHTtopbarMIDDLE.png-0e54631e5b7cc08d8f34b91d0b550eb5.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b6rtkj6kpm8fd"]
 
-[ext_resource type="Texture2D" uid="uid://dg3o57hoy7eel" path="res://resources/ui/LIGHTbackground.png" id="1_d42bg"]
+[ext_resource type="Texture2D" uid="uid://dg3o57hoy7eel" path="res://resources/ui/LIGHT/LIGHTbackground.png" id="1_d42bg"]
 [ext_resource type="Script" uid="uid://bcxfi7hos02ou" path="res://scripts/CatPage.gd" id="1_sbb08"]
 [ext_resource type="FontFile" uid="uid://bd5jlefpj0cvq" path="res://resources/ui/runescape_uf.ttf" id="2_exu3d"]
 

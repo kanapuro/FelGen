@@ -9,6 +9,7 @@
 script = ExtResource("1_e2kw7")
 
 [node name="Background" type="Sprite2D" parent="."]
+position = Vector2(9.53674e-07, 0)
 scale = Vector2(5, 5)
 texture = ExtResource("2_a2evy")
 centered = false

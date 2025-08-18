@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://di5qd5vd0l7u7"]
+[gd_scene load_steps=12 format=3 uid="uid://di5qd5vd0l7u7"]
 
 [ext_resource type="PackedScene" uid="uid://bs13fm218nhyk" path="res://scenes/placeholdercamp1.tscn" id="1_slrft"]
-[ext_resource type="Texture2D" uid="uid://p7325v08yupw" path="res://resources/ui/LIGHTmainborder.png" id="2_y81b7"]
-[ext_resource type="Texture2D" uid="uid://cbgkoueu7maod" path="res://resources/ui/LIGHTtopbar.png" id="3_id520"]
+[ext_resource type="Texture2D" uid="uid://p7325v08yupw" path="res://resources/ui/LIGHT/LIGHTmainborder.png" id="2_y81b7"]
+[ext_resource type="Texture2D" uid="uid://cbgkoueu7maod" path="res://resources/ui/LIGHT/LIGHTtopbar.png" id="3_id520"]
 [ext_resource type="Script" uid="uid://dr0um4wpf6uap" path="res://scripts/TimeSkip.gd" id="4_61481"]
+[ext_resource type="Script" uid="uid://cvp3pd25a5bbf" path="res://scenes/Topbar.gd" id="4_ku7un"]
+[ext_resource type="Texture2D" uid="uid://u56jsiwcrcyj" path="res://resources/ui/LIGHT/LIGHTtopbarLEFT.png" id="4_y81b7"]
+[ext_resource type="Texture2D" uid="uid://dhmq03cc6pr2i" path="res://resources/ui/LIGHT/LIGHTtopbarMIDDLE.png" id="5_61481"]
 [ext_resource type="Script" uid="uid://c60arjdeuky7f" path="res://scripts/dialogueoutputtemplate.gd" id="5_ku7un"]
+[ext_resource type="Texture2D" uid="uid://bscg3qw4u3qer" path="res://resources/ui/LIGHT/LIGHTtopbarRIGHT.png" id="6_ku7un"]
+[ext_resource type="FontFile" uid="uid://bd5jlefpj0cvq" path="res://resources/ui/runescape_uf.ttf" id="6_vcqf4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_p6vrc"]
+font = ExtResource("6_vcqf4")
+font_size = 26
 
 [node name="Main" type="Node"]
 
@@ -27,18 +36,87 @@ offset_bottom = 40.0
 mouse_filter = 2
 texture = ExtResource("3_id520")
 
+[node name="Control" type="Control" parent="SharedUIContainer" node_paths=PackedStringArray("buttons", "labels")]
+process_mode = 3
+anchors_preset = 0
+offset_left = 224.0
+offset_top = 72.0
+offset_right = 976.0
+offset_bottom = 128.0
+script = ExtResource("4_ku7un")
+buttons = [NodePath("LeftButton"), NodePath("MiddleButton"), NodePath("RightButton")]
+labels = [NodePath("LeftLabel"), NodePath("MiddleLabel"), NodePath("RightLabel")]
+
+[node name="LeftButton" type="TextureRect" parent="SharedUIContainer/Control"]
+modulate = Color(1, 1, 1, 0.196078)
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 56.0
+texture = ExtResource("4_y81b7")
+
+[node name="MiddleButton" type="TextureRect" parent="SharedUIContainer/Control"]
+modulate = Color(1, 1, 1, 0.196078)
+layout_mode = 0
+offset_left = 261.0
+offset_top = 3.0
+offset_right = 481.0
+offset_bottom = 53.0
+texture = ExtResource("5_61481")
+
+[node name="RightButton" type="TextureRect" parent="SharedUIContainer/Control"]
+modulate = Color(1, 1, 1, 0.196078)
+layout_mode = 0
+offset_left = 486.0
+offset_top = 3.0
+offset_right = 752.0
+offset_bottom = 53.0
+texture = ExtResource("6_ku7un")
+
+[node name="LeftLabel" type="Label" parent="SharedUIContainer/Control"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -2.0
+offset_right = 258.0
+offset_bottom = 58.0
+text = "EVENTS"
+label_settings = SubResource("LabelSettings_p6vrc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MiddleLabel" type="Label" parent="SharedUIContainer/Control"]
+layout_mode = 0
+offset_left = 258.0
+offset_top = -2.0
+offset_right = 484.0
+offset_bottom = 58.0
+text = "COLONY"
+label_settings = SubResource("LabelSettings_p6vrc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightLabel" type="Label" parent="SharedUIContainer/Control"]
+layout_mode = 0
+offset_left = 483.0
+offset_top = -2.0
+offset_right = 756.0
+offset_bottom = 58.0
+text = "ACTIVITIES"
+label_settings = SubResource("LabelSettings_p6vrc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Timeskip" type="Button" parent="."]
-offset_left = 488.0
-offset_top = 136.0
-offset_right = 701.0
-offset_bottom = 185.0
+offset_left = 976.0
+offset_top = 944.0
+offset_right = 1189.0
+offset_bottom = 993.0
 text = "SKIP 1 MONTH"
 script = ExtResource("4_61481")
 
 [node name="DialogueTester" type="Button" parent="."]
-offset_left = 528.0
-offset_top = 192.0
-offset_right = 660.0
-offset_bottom = 223.0
+offset_left = 1056.0
+offset_top = 912.0
+offset_right = 1188.0
+offset_bottom = 943.0
 text = "dialogue output"
 script = ExtResource("5_ku7un")
