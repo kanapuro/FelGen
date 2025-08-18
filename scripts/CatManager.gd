@@ -105,30 +105,67 @@ func spawn_cat(nick: String = "", gender: String = "", colony: String = "", age_
 	cats.append(cat)
 	return cat
 
-func get_random_position() -> Vector2:
+func get_random_position(max_attempts: int = 100, min_distance: float = 50.0) -> Vector2:
 	var vp = get_viewport()
-	if vp == null:
+	if not vp:
+		push_warning("Failed to get viewport in get_random_position()")
 		return Vector2.ZERO
 
-	var size = vp.get_visible_rect().size
-	var extra_padding := 25.0
-	var top_buffer := 80.0
-	var tries := 0
-
-	while tries < 64:
-		var pos = Vector2(
-			randf_range(spawn_padding + extra_padding, size.x - spawn_padding - extra_padding),
-			randf_range(spawn_padding + extra_padding + top_buffer, size.y - spawn_padding - extra_padding)
+	var screen_rect := vp.get_visible_rect().size
+	var padding := spawn_padding + min_distance
+	
+	# Define safe spawn area (accounting for padding)
+	var spawn_rect := Rect2(
+		Vector2(padding, padding + 80.0),  # Top-left (with top buffer)
+		Vector2(screen_rect.x - 2*padding, screen_rect.y - 2*padding - 80.0)  # Size
+	)
+	
+	# Filter valid cats first
+	var valid_cats := []
+	for cat in cats:
+		if cat and is_instance_valid(cat):
+			valid_cats.append(cat)
+	
+	# Try to find valid position
+	for _attempt in max_attempts:
+		var test_pos := Vector2(
+			randf_range(spawn_rect.position.x, spawn_rect.end.x),
+			randf_range(spawn_rect.position.y, spawn_rect.end.y)
 		)
-		var valid = true
-		for c in cats:
-			if c and is_instance_valid(c) and c.position.distance_to(pos) < spawn_padding + extra_padding:
-				valid = false
+		
+		var position_valid := true
+		for cat in valid_cats:
+			if cat.position.distance_to(test_pos) < padding:
+				position_valid = false
 				break
-		if valid:
-			return pos
-		tries += 1
-	return Vector2.ZERO
+				
+		if position_valid:
+			return test_pos
+	
+	# Fallback - find least bad position if all attempts fail
+	if valid_cats.size() > 0:
+		var best_pos := Vector2.ZERO
+		var best_distance := 0.0
+		
+		# Do 10 quick checks to find least crowded spot
+		for _i in 10:
+			var test_pos := Vector2(
+				randf_range(spawn_rect.position.x, spawn_rect.end.x),
+				randf_range(spawn_rect.position.y, spawn_rect.end.y)
+			)
+			
+			var min_dist := INF
+			for cat in valid_cats:
+				min_dist = min(min_dist, cat.position.distance_to(test_pos))
+			
+			if min_dist > best_distance:
+				best_distance = min_dist
+				best_pos = test_pos
+				
+		return best_pos
+	
+	# If no cats exist, return center of safe area
+	return spawn_rect.get_center()
 
 func _on_cat_clicked(cat: Cat) -> void:
 	print("CatManager received click for: ", cat.nick)
