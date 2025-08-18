@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0ec2nw6t2vxs"]
+
+[ext_resource type="Script" uid="uid://8577gb7luwom" path="res://scripts/Cat.gd" id="1_mf6hk"]
+[ext_resource type="Texture2D" uid="uid://838sjpppu3dm" path="res://sprites/adultpose1.png" id="2_mf6hk"]
+[ext_resource type="Texture2D" uid="uid://bhpiyoe3rdtlq" path="res://sprites/adultpose1basewhite.png" id="3_xubs0"]
+[ext_resource type="Texture2D" uid="uid://b2q11rqtk5xfp" path="res://sprites/adultpose1eyeserror.png" id="4_a4g28"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_limvi"]
+radius = 22.0
+height = 72.0
+
+[node name="Cat" type="Node2D"]
+script = ExtResource("1_mf6hk")
+
+[node name="Pose" type="Sprite2D" parent="."]
+texture = ExtResource("2_mf6hk")
+
+[node name="Base" type="Sprite2D" parent="."]
+texture = ExtResource("3_xubs0")
+
+[node name="Eyes" type="Sprite2D" parent="."]
+texture = ExtResource("4_a4g28")
+
+[node name="ClickArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_limvi")

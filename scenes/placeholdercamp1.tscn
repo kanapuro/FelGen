@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bs13fm218nhyk"]
+
+[ext_resource type="Texture2D" uid="uid://besgkknelux7n" path="res://sprites/placeholdercampsprite.png" id="1_8cght"]
+[ext_resource type="Script" uid="uid://daoqu7wwnq47q" path="res://scripts/Camp.gd" id="1_e2kw7"]
+[ext_resource type="Script" uid="uid://royst32afwvg" path="res://scripts/CatManager.gd" id="1_lcne1"]
+[ext_resource type="PackedScene" uid="uid://b0ec2nw6t2vxs" path="res://scenes/Cat.tscn" id="2_smg7s"]
+
+[node name="PlaceholderCamp" type="Node2D"]
+script = ExtResource("1_e2kw7")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_8cght")
+centered = false
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "PlaceholderColony1"
+
+[node name="CatManager" type="Node" parent="."]
+script = ExtResource("1_lcne1")
+cat_scene = ExtResource("2_smg7s")
