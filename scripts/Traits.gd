@@ -1,4 +1,3 @@
-# res://scripts/Traits.gd
 class_name Traits
 
 # Pose dictionary by life stage + fur length
@@ -8,8 +7,8 @@ const POSES = {
 			{
 				"id": "bp1",
 				"pose": "res://sprites/bairnpose1.png",
-				"base": {"white": "res://sprites/bairnpose1basewhite.png"},
-				"eyes": {"error": "res://sprites/bairnpose1eyeserror.png"}
+				"base": {"solid": "res://sprites/bairnpose1solid.png"},
+				"eyes": {"error": "res://sprites/bairnpose1eyeserror.png", "amber": "res://sprites/bairnpose1eyesamber.png"}
 			}
 		]
 	},
@@ -18,16 +17,16 @@ const POSES = {
 			{
 				"id": "jp1",
 				"pose": "res://sprites/juvenilepose1.png",
-				"base": {"white": "res://sprites/juvenilepose1basewhite.png"},
-				"eyes": {"error": "res://sprites/juvenilepose1eyeserror.png"}
+				"base": {"solid": "res://sprites/juvenilepose1solid.png"},
+				"eyes": {"error": "res://sprites/juvenilepose1eyeserror.png", "amber": "res://sprites/juvenilepose1eyesamber.png"}
 			}
 		],
 		"long": [
 			{
 				"id": "jp2",
 				"pose": "res://sprites/juvenilepose2.png",
-				"base": {"white": "res://sprites/juvenilepose2basewhite.png"},
-				"eyes": {"error": "res://sprites/juvenilepose2eyeserror.png"}
+				"base": {"solid": "res://sprites/juvenilepose2solid.png"},
+				"eyes": {"error": "res://sprites/juvenilepose2eyeserror.png", "amber": "res://sprites/juvenilepose2eyesamber.png"}
 			}
 		]
 	},
@@ -36,22 +35,22 @@ const POSES = {
 			{
 				"id": "ap1",
 				"pose": "res://sprites/adultpose1.png",
-				"base": {"white": "res://sprites/adultpose1basewhite.png"},
-				"eyes": {"error": "res://sprites/adultpose1eyeserror.png"}
+				"base": {"solid": "res://sprites/adultpose1solid.png"},
+				"eyes": {"error": "res://sprites/adultpose1eyeserror.png", "amber": "res://sprites/adultpose1eyesamber.png"}
 			},
 			{
 				"id": "ap2",
 				"pose": "res://sprites/adultpose2.png",
-				"base": {"white": "res://sprites/adultpose2basewhite.png"},
-				"eyes": {"error": "res://sprites/adultpose2eyeserror.png"}
+				"base": {"solid": "res://sprites/adultpose2solid.png"},
+				"eyes": {"error": "res://sprites/adultpose2eyeserror.png", "amber": "res://sprites/adultpose2eyesamber.png"}
 			}
 		],
 		"long": [
 			{
 				"id": "ap3",
 				"pose": "res://sprites/adultpose3.png",
-				"base": {"white": "res://sprites/adultpose3basewhite.png"},
-				"eyes": {"error": "res://sprites/adultpose3eyeserror.png"}
+				"base": {"solid": "res://sprites/adultpose3solid.png"},
+				"eyes": {"error": "res://sprites/adultpose3eyeserror.png", "amber": "res://sprites/adultpose3eyesamber.png"}
 			}
 		]
 	},
@@ -60,18 +59,47 @@ const POSES = {
 			{
 				"id": "sp1",
 				"pose": "res://sprites/seniorpose1.png",
-				"base": {"white": "res://sprites/seniorpose1basewhite.png"},
-				"eyes": {"error": "res://sprites/seniorpose1eyeserror.png"}
+				"base": {"solid": "res://sprites/seniorpose1solid.png"},
+				"eyes": {"error": "res://sprites/seniorpose1eyeserror.png", "amber": "res://sprites/seniorpose1eyesamber.png"}
 			}
 		],
 		"long": [
 			{
 				"id": "sp2",
 				"pose": "res://sprites/seniorpose2.png",
-				"base": {"white": "res://sprites/seniorpose2basewhite.png"},
-				"eyes": {"error": "res://sprites/seniorpose2eyeserror.png"}
+				"base": {"solid": "res://sprites/seniorpose2solid.png"},
+				"eyes": {"error": "res://sprites/seniorpose2eyeserror.png", "amber": "res://sprites/seniorpose2eyesamber.png"}
 			}
 		]
+	}
+}
+
+const COLORS = { # base must be rich, warm, and earthy, SECOND LIGHTEST
+	"white": {"modulate": "#ffffff"}, # DEBUG: should never show up
+	"russet": {"modulate": "#cc5500"}, # old: e3812b, terra cotta orange
+	"ebony": {"modulate": "#3d3d3d"}, # dark charcoal
+	"taupe": {"modulate": "#756556"}, # dark taupe
+	"slate": {"modulate": "#708090"} # blue-gray
+}
+
+const DILUTIONS = {
+	"thinned": { # thinned dilution / thin dilute color | LIGHT, WASHED OUT, CREAMY, LIGHTEST
+		"russet": {"modulate": "#e8b98d"}, # old: e3bb76, apricot cream
+		"ebony": {"modulate": "#7d7d7d"}, # medium gray
+		"taupe": {"modulate": "#d2b48c"}, # fawn beige
+		"slate": {"modulate": "#d3d3d3"} # light silver
+	},
+	"caramelized": { # caramelized dilution / caramel dilute color | DEEPER, REDDER, DEEPEST
+		"russet": {"modulate": "#a34212"}, # old: e05200, burnt sienna
+		"ebony": {"modulate": "#5c4033"}, # warm brown-black
+		"taupe": {"modulate": "#7b3f00"}, # chocolate
+		"slate": {"modulate": "#5d8aa8"} # steel blue
+	},
+	"intensified": { # intensified dilution / intense dilute color | VIBRANT, BRIGHT, SECOND DEEPEST
+		"russet": {"modulate": "#ff7b24"},  # old: ff9500, pumpkin orange
+		"ebony": {"modulate": "#1a1a1a"}, # near black
+		"taupe": {"modulate": "#4d1d05"}, # mahogany
+		"slate": {"modulate": "#464647"} # iron gray
 	}
 }
 

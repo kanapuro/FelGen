@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="FelGen"
-config/version="0.2.2"
+config/version="0.3.0"
 run/main_scene="uid://di5qd5vd0l7u7"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://f4e0lbbrf28"

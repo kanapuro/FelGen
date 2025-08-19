@@ -57,10 +57,11 @@ func spawn_cat(nick: String = "", gender: String = "", colony: String = "", age_
 			# 50% chance: manual list
 			var Nnamelist = Traits.NAMELIST
 			nick = Nnamelist[randi() % Nnamelist.size()]
+			
 
 	# ---------- basic data ----------
 	cat.nick = nick
-	cat.gender = gender
+	cat.gender = gender  
 	cat.colony = colony
 	cat.age_months = int(age_months)
 	cat.compute_life_stage()
@@ -87,12 +88,29 @@ func spawn_cat(nick: String = "", gender: String = "", colony: String = "", age_
 
 	cat.current_pose_set = pose_list[randi() % pose_list.size()]
 
-	# Set colors from pose data
-	var base_dict = cat.current_pose_set.get("base", {})
-	cat.base_color = base_dict.keys()[0] if base_dict.size() > 0 else "white"
-	
+	# ---------- base color ----------
+	var color_keys = Traits.COLORS.keys()
+	if color_keys.is_empty():
+		cat.base_color = "white"
+		push_warning("No colors defined in Traits.COLORS, defaulting to white")
+	else:
+		cat.base_color = get_random_color(Traits.COLORS, ["white"])
+		
+		# ---------- dilution (OPTIONAL) ----------
+	var dilution_chance = 0.7  # 70%
+	if randf() < dilution_chance:
+		var dilution_keys = Traits.DILUTIONS.keys()
+		if dilution_keys.is_empty():
+			cat.dilution = "basic"
+			push_warning("No dilutions defined, defaulting to basic")
+		else:
+			cat.dilution = dilution_keys[randi() % dilution_keys.size()]
+	else:
+		cat.dilution = "none"  
+
+	# ---------- eye color ----------
 	var eyes_dict = cat.current_pose_set.get("eyes", {})
-	cat.eye_color = eyes_dict.keys()[0] if eyes_dict.size() > 0 else "error"
+	cat.eye_color = get_random_color(eyes_dict, ["error"])  # exclude
 
 	# ---------- add to scene ----------
 	add_child(cat)
@@ -167,6 +185,25 @@ func get_random_position(max_attempts: int = 100, min_distance: float = 50.0) ->
 	# If no cats exist, return center of safe area
 	return spawn_rect.get_center()
 
+func get_random_color(color_dict: Dictionary, exclude_colors: Array = []) -> String:
+	if color_dict.is_empty():
+		return "default"
+	
+	var available_colors = color_dict.keys()
+	
+	# Filter out excluded colors
+	if not exclude_colors.is_empty():
+		available_colors = available_colors.filter(
+			func(color): return not exclude_colors.has(color)
+		)
+	
+	# Fallback logic
+	if available_colors.is_empty():
+		push_warning("No valid colors after filtering, using first available")
+		return color_dict.keys()[0]
+	
+	return available_colors[randi() % available_colors.size()]
+
 func _on_cat_clicked(cat: Cat) -> void:
 	print("CatManager received click for: ", cat.nick)
 	if is_instance_valid(current_cat_page):
@@ -177,7 +214,7 @@ func _on_cat_clicked(cat: Cat) -> void:
 	current_cat_page.position = get_viewport().size * 0.5 - current_cat_page.size * 0.5
 	
 	if current_cat_page.has_method("show_cat"):
-		current_cat_page.show_cat(cat)
+		current_cat_page.show_cat(cat, cat_scene)  # PASS cat_scene here
 	else:
 		push_error("CatPage missing show_cat() method!")
 

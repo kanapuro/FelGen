@@ -1,19 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://di5qd5vd0l7u7"]
+[gd_scene load_steps=15 format=3 uid="uid://di5qd5vd0l7u7"]
 
 [ext_resource type="PackedScene" uid="uid://bs13fm218nhyk" path="res://scenes/placeholdercamp1.tscn" id="1_slrft"]
 [ext_resource type="Texture2D" uid="uid://p7325v08yupw" path="res://resources/ui/LIGHT/LIGHTmainborder.png" id="2_y81b7"]
 [ext_resource type="Texture2D" uid="uid://cbgkoueu7maod" path="res://resources/ui/LIGHT/LIGHTtopbar.png" id="3_id520"]
-[ext_resource type="Script" uid="uid://dr0um4wpf6uap" path="res://scripts/TimeSkip.gd" id="4_61481"]
 [ext_resource type="Script" uid="uid://cvp3pd25a5bbf" path="res://scripts/Topbar.gd" id="4_ku7un"]
 [ext_resource type="Texture2D" uid="uid://u56jsiwcrcyj" path="res://resources/ui/LIGHT/LIGHTtopbarLEFT.png" id="4_y81b7"]
 [ext_resource type="Texture2D" uid="uid://dhmq03cc6pr2i" path="res://resources/ui/LIGHT/LIGHTtopbarMIDDLE.png" id="5_61481"]
-[ext_resource type="Script" uid="uid://c60arjdeuky7f" path="res://scripts/dialogueoutputtemplate.gd" id="5_ku7un"]
 [ext_resource type="Texture2D" uid="uid://bscg3qw4u3qer" path="res://resources/ui/LIGHT/LIGHTtopbarRIGHT.png" id="6_ku7un"]
 [ext_resource type="FontFile" uid="uid://bd5jlefpj0cvq" path="res://resources/ui/runescape_uf.ttf" id="6_vcqf4"]
 [ext_resource type="Texture2D" uid="uid://4bpdv0twh4oc" path="res://resources/ui/LIGHT/LIGHTmainSETTING1.png" id="9_p6vrc"]
 [ext_resource type="Script" uid="uid://k1wekwtpoic1" path="res://scripts/SettingsButton.gd" id="10_mrw3o"]
 [ext_resource type="Texture2D" uid="uid://b7jwft4nwcat6" path="res://resources/ui/LIGHT/LIGHTmainSETTING2.png" id="11_4p363"]
 [ext_resource type="PackedScene" uid="uid://car2uk10l6ore" path="res://scenes/SettingsScene.tscn" id="12_6pj6d"]
+[ext_resource type="Script" uid="uid://cjdktr5elex5a" path="res://scenes/DebugButtons.gd" id="13_pw51l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p6vrc"]
 font = ExtResource("6_vcqf4")
@@ -125,18 +124,32 @@ idle_texture = ExtResource("9_p6vrc")
 active_texture = ExtResource("11_4p363")
 settings_scene = ExtResource("12_6pj6d")
 
-[node name="Timeskip" type="Button" parent="."]
-offset_left = 976.0
+[node name="DebugButtons" type="Control" parent="SharedUIContainer" node_paths=PackedStringArray("timeskip_button", "spawncat_button", "dialoguetester_button")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("13_pw51l")
+timeskip_button = NodePath("Timeskip")
+spawncat_button = NodePath("SpawnCat")
+dialoguetester_button = NodePath("DialogueTester")
+
+[node name="Timeskip" type="Button" parent="SharedUIContainer/DebugButtons"]
+offset_left = 1068.0
 offset_top = 944.0
 offset_right = 1189.0
 offset_bottom = 993.0
 text = "SKIP 1 MONTH"
-script = ExtResource("4_61481")
 
-[node name="DialogueTester" type="Button" parent="."]
+[node name="SpawnCat" type="Button" parent="SharedUIContainer/DebugButtons"]
+offset_left = 966.0
+offset_top = 944.0
+offset_right = 1065.0
+offset_bottom = 993.0
+text = "SPAWN CAT"
+
+[node name="DialogueTester" type="Button" parent="SharedUIContainer/DebugButtons"]
 offset_left = 1056.0
 offset_top = 912.0
 offset_right = 1188.0
 offset_bottom = 943.0
 text = "dialogue output"
-script = ExtResource("5_ku7un")
