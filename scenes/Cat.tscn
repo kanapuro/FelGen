@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://8577gb7luwom" path="res://scripts/Cat.gd" id="1_mf6hk"]
 [ext_resource type="Texture2D" uid="uid://838sjpppu3dm" path="res://sprites/adultpose1.png" id="2_mf6hk"]
-[ext_resource type="Texture2D" uid="uid://bhpiyoe3rdtlq" path="res://sprites/adultpose1basewhite.png" id="3_xubs0"]
+[ext_resource type="Texture2D" uid="uid://dy713hi2f3m10" path="res://sprites/adultpose1solid.png" id="3_limvi"]
 [ext_resource type="Texture2D" uid="uid://b2q11rqtk5xfp" path="res://sprites/adultpose1eyeserror.png" id="4_a4g28"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_limvi"]
@@ -16,7 +16,7 @@ script = ExtResource("1_mf6hk")
 texture = ExtResource("2_mf6hk")
 
 [node name="Base" type="Sprite2D" parent="."]
-texture = ExtResource("3_xubs0")
+texture = ExtResource("3_limvi")
 
 [node name="Eyes" type="Sprite2D" parent="."]
 texture = ExtResource("4_a4g28")

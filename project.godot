@@ -11,10 +11,9 @@ config_version=5
 [application]
 
 config/name="FelGen"
-config/version="0.3.0"
+config/version="1.3.1.0"
 run/main_scene="uid://di5qd5vd0l7u7"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="uid://f4e0lbbrf28"
 
 [display]
 
@@ -45,3 +44,4 @@ ui_accept={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

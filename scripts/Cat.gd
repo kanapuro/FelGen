@@ -11,7 +11,7 @@ var fur_length: String = ""
 var dilution: String = ""
 
 # Visual traits
-var base_color: String = "" 
+var base_color: String = ""
 var eye_color: String = ""
 
 # Temporary data
@@ -19,20 +19,26 @@ var current_pose_set: Dictionary = {}
 
 signal clicked(cat)
 
-@onready var pose_sprite: Sprite2D = $Pose
-@onready var base_sprite: Sprite2D = $Base
-@onready var eyes_sprite: Sprite2D = $Eyes
-@onready var click_area: Area2D = $ClickArea
+var pose_sprite: Sprite2D
+var base_sprite: Sprite2D
+var eyes_sprite: Sprite2D
+var click_area: Area2D
 
 func _ready():
+	pose_sprite = get_node_or_null("Pose")
+	base_sprite = get_node_or_null("Base")
+	eyes_sprite = get_node_or_null("Eyes")
+	click_area = get_node_or_null("ClickArea")
+	
+	if not pose_sprite or not base_sprite or not eyes_sprite:
+		push_error("Missing required sprite nodes in Cat scene!")
+		return
+	
 	initialize_colors()
 	update_sprites()
+	
 	if click_area:
-		print("ClickArea found: ", click_area.name)
-		var connect_result = click_area.input_event.connect(_on_input_event)
-		print("Signal connection result: ", connect_result)
-	else:
-		print("ClickArea is null!")
+		click_area.input_event.connect(_on_input_event)
 
 func _on_input_event(_viewport, event, _shape_idx):
 	print("Input event received: ", event)
@@ -48,7 +54,7 @@ func initialize_colors():
 		base_color = "white"
 	if eye_color.is_empty():
 		eye_color = "error"
-	if dilution.is_empty(): 
+	if dilution.is_empty():
 		dilution = "none"
 
 func compute_life_stage():
@@ -97,13 +103,13 @@ func update_sprites():
 	
 	# Load pose sprite
 	if pose_sprite and current_pose_set.has("pose"):
-		pose_sprite.texture = load(current_pose_set["pose"])
+		pose_sprite.texture = export_safe_load(current_pose_set["pose"])
 	
 		# Load base texture and apply color modulation
 	if base_sprite and current_pose_set.has("base"):
 		var base_texture_path = current_pose_set["base"].get("solid", "")
 		if base_texture_path:
-			base_sprite.texture = load(base_texture_path)
+			base_sprite.texture = export_safe_load(base_texture_path)
 			
 			# FIX: REPLACE instead of multiply colors
 			if dilution != "none" and dilution != "":
@@ -127,7 +133,7 @@ func update_sprites():
 	if eyes_sprite and current_pose_set.has("eyes"):
 		var eye_texture_path = current_pose_set["eyes"].get(eye_color, "")
 		if eye_texture_path:
-			eyes_sprite.texture = load(eye_texture_path)
+			eyes_sprite.texture = export_safe_load(eye_texture_path)
 		else:
 			push_warning("No eye texture found for: ", eye_color)
 
@@ -146,4 +152,45 @@ func set_data_from(other_cat):
 	gender = other_cat.gender
 	current_pose_set = other_cat.current_pose_set.duplicate(true)  # deep copy
 	
-	update_sprites() 
+	update_sprites()
+
+func export_safe_load(path: String):
+	# COMPLETELY bypass ResourceLoader
+	var file_path = path.replace("res://", "")
+	
+	if not FileAccess.file_exists(file_path):
+		push_error("MISSING FILE: " + file_path)
+		return null
+	
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if file == null:
+		push_error("CAN'T OPEN: " + file_path)
+		return null
+	
+	var buffer = file.get_buffer(file.get_length())
+	file.close()
+	
+	# Handle different file types
+	if path.ends_with(".png"):
+		var image = Image.new()
+		if image.load_png_from_buffer(buffer) != OK:
+			push_error("INVALID PNG: " + path)
+			return null
+		var texture = ImageTexture.create_from_image(image)
+		return texture
+	
+	elif path.ends_with(".tscn") or path.ends_with(".scn"):
+		push_error("CAN'T DIRECTLY LOAD SCENES: " + path)
+		return null
+	
+	else:
+		push_error("UNSUPPORTED FILE TYPE: " + path)
+		return null
+
+func safe_instantiate_scene(path: String):
+	# Preload scenes in project settings to force export inclusion
+	var scene = load(path)
+	if scene == null:
+		push_error("MISSING SCENE: " + path)
+		return null
+	return scene.instantiate()
