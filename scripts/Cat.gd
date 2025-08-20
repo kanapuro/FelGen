@@ -103,28 +103,25 @@ func update_sprites():
 	
 	# Load pose sprite
 	if pose_sprite and current_pose_set.has("pose"):
-		pose_sprite.texture = export_safe_load(current_pose_set["pose"])
+		pose_sprite.texture = ResourceLoader.load(current_pose_set["pose"])
 	
-		# Load base texture and apply color modulation
+	# Load base texture and apply color modulation
 	if base_sprite and current_pose_set.has("base"):
 		var base_texture_path = current_pose_set["base"].get("solid", "")
 		if base_texture_path:
-			base_sprite.texture = export_safe_load(base_texture_path)
+			base_sprite.texture = ResourceLoader.load(base_texture_path)
 			
-			# FIX: REPLACE instead of multiply colors
+			# ==== YOUR COLOR & DILUTION SYSTEM =====
+			# Apply base color first
+			var color_data = Traits.COLORS.get(base_color, {"modulate": "#ffffff"})
+			base_sprite.modulate = Color(color_data.modulate)
+			
+			# Apply dilution on top (REPLACE, not multiply)
 			if dilution != "none" and dilution != "":
 				var dilution_data = Traits.DILUTIONS.get(dilution, {})
 				if dilution_data.has(base_color):
-					# REPLACE with dilution color (don't multiply)
 					base_sprite.modulate = Color(dilution_data[base_color].modulate)
-				else:
-					# Fallback to base color if no dilution found
-					var color_data = Traits.COLORS.get(base_color, {"modulate": "#ffffff"})
-					base_sprite.modulate = Color(color_data.modulate)
-			else:
-				# No dilution - use base color
-				var color_data = Traits.COLORS.get(base_color, {"modulate": "#ffffff"})
-				base_sprite.modulate = Color(color_data.modulate)
+			# ======================================
 			
 		else:
 			push_warning("No solid base texture found in pose data")
@@ -133,7 +130,7 @@ func update_sprites():
 	if eyes_sprite and current_pose_set.has("eyes"):
 		var eye_texture_path = current_pose_set["eyes"].get(eye_color, "")
 		if eye_texture_path:
-			eyes_sprite.texture = export_safe_load(eye_texture_path)
+			eyes_sprite.texture = ResourceLoader.load(eye_texture_path)
 		else:
 			push_warning("No eye texture found for: ", eye_color)
 
@@ -153,44 +150,3 @@ func set_data_from(other_cat):
 	current_pose_set = other_cat.current_pose_set.duplicate(true)  # deep copy
 	
 	update_sprites()
-
-func export_safe_load(path: String):
-	# COMPLETELY bypass ResourceLoader
-	var file_path = path.replace("res://", "")
-	
-	if not FileAccess.file_exists(file_path):
-		push_error("MISSING FILE: " + file_path)
-		return null
-	
-	var file = FileAccess.open(file_path, FileAccess.READ)
-	if file == null:
-		push_error("CAN'T OPEN: " + file_path)
-		return null
-	
-	var buffer = file.get_buffer(file.get_length())
-	file.close()
-	
-	# Handle different file types
-	if path.ends_with(".png"):
-		var image = Image.new()
-		if image.load_png_from_buffer(buffer) != OK:
-			push_error("INVALID PNG: " + path)
-			return null
-		var texture = ImageTexture.create_from_image(image)
-		return texture
-	
-	elif path.ends_with(".tscn") or path.ends_with(".scn"):
-		push_error("CAN'T DIRECTLY LOAD SCENES: " + path)
-		return null
-	
-	else:
-		push_error("UNSUPPORTED FILE TYPE: " + path)
-		return null
-
-func safe_instantiate_scene(path: String):
-	# Preload scenes in project settings to force export inclusion
-	var scene = load(path)
-	if scene == null:
-		push_error("MISSING SCENE: " + path)
-		return null
-	return scene.instantiate()
