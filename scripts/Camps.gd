@@ -1,7 +1,8 @@
 extends Control
 class_name Camps
 
-@onready var cat_manager = get_tree().get_first_node_in_group("cat_managers") as CatManager
+# Change the variable name to avoid shadowing
+@onready var camp_manager = get_tree().get_first_node_in_group("cat_managers") as CatManager
 
 func _ready():
 	add_to_group("camps")
@@ -15,14 +16,14 @@ func _ready():
 		print("SpawnArea hidden in: ", name)
 
 func spawn_cat_in_camp(camp_name: String, nick: String = "Unnamed", gender: String = "unknown"):
-	if cat_manager:
-		cat_manager.spawn_cat(camp_name, nick, gender)
+	if camp_manager:  # Use the renamed variable
+		camp_manager.spawn_cat(camp_name, nick, gender)
 	else:
 		push_error("CatManager node not found in camp!")
 
 func time_skip(months: int = 1):
-	if cat_manager:
-		cat_manager.age_all_cats(months)
+	if camp_manager:  # Use the renamed variable
+		camp_manager.age_all_cats(months)
 
 func initialize_camp(camp_name: String):
 	name = camp_name  # Set the actual node name

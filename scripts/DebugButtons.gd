@@ -18,8 +18,6 @@ func _ready():
 		spawncat_button.pressed.connect(_on_spawncat_pressed)
 	if dialoguetester_button:
 		dialoguetester_button.pressed.connect(_on_dialoguetester_pressed)
-	if spawncamp_button:
-		spawncamp_button.pressed.connect(_on_spawncamp_pressed)
 
 func _on_timeskip_pressed():
 	print("Timeskip pressed - skipping 1 month")
@@ -63,22 +61,6 @@ func _on_spawncat_pressed():
 	
 	# Spawn cat in the selected camp
 	cat_manager.spawn_cat(random_camp.name)
-
-func _on_spawncamp_pressed():
-	print("Spawning camp")
-	
-	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
-	if cat_managers.is_empty():
-		push_error("No CatManager found!")
-		return
-	
-	var cat_manager = cat_managers[0] as CatManager
-	
-	# Just pick from known camp names - no group searching needed
-	var camp_names = ["CampTemplate", "MeadowCampBurrow"]  # Add your actual camp names
-	
-	var random_camp = camp_names[randi() % camp_names.size()]
-	cat_manager.spawn_camp(random_camp, Vector2.ZERO)
 
 func _on_test_spawnareas_pressed():
 	print("=== TESTING SPAWNAREAS ===")
