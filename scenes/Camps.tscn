@@ -49,4 +49,4 @@ texture = ExtResource("3_ct76l")
 
 [node name="SpawnArea" type="Polygon2D" parent="MeadowCampBurrow"]
 color = Color(1, 0, 0, 1)
-polygon = PackedVector2Array(29, 349, 39, 961, 572, 968, 861, 964, 1165, 964, 1167, 384, 1171, 155, 1104, 169, 1003, 216, 760, 243, 541, 321, 247, 336)
+polygon = PackedVector2Array(36, 365, 31, 464, 97, 551, 143, 666, 96, 799, 31, 833, 39, 961, 572, 968, 861, 964, 1165, 964, 1170, 625, 1066, 589, 949, 488, 959, 375, 1020, 277, 979, 238, 760, 243, 541, 321, 247, 336)

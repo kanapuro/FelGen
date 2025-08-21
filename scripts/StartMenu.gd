@@ -168,7 +168,7 @@ func start_new_game():
 	print("Starting new game")
 	
 	# Store which camp to spawn
-	var camp_names = ["CampTemplate", "MeadowCampBurrow"]
+	var camp_names = ["MeadowCampBurrow"]
 	var random_camp = camp_names[randi() % camp_names.size()]
 	
 	# Store this in a temporary file

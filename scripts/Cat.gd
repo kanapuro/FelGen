@@ -42,18 +42,18 @@ func _ready():
 		# Make sure it's not disabled
 		click_area.input_event.connect(_on_input_event)
 		click_area.input_pickable = true  # Ensure it can receive input
-		print("ClickArea setup complete for cat: ", nick)
+		#print("ClickArea setup complete for cat: ", nick)
 	else:
 		push_error("No ClickArea found for cat: ", nick)
 	
 	initialize_colors()
 	update_sprites()
 func _on_input_event(_viewport, event, _shape_idx):
-	print("Input event received: ", event)
+	#print("Input event received: ", event)
 	if event is InputEventMouseButton:
-		print("Mouse button: ", event.pressed, " button: ", event.button_index)
+		#print("Mouse button: ", event.pressed, " button: ", event.button_index)
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			print("Emitting clicked signal")
+			#print("Emitting clicked signal")
 			emit_signal("clicked", self)
 
 func initialize_colors():
@@ -86,11 +86,11 @@ func update_pose():
 
 func get_random_pose() -> Dictionary:
 	var pose_key = "short" if life_stage == "bairn" else fur_length
-	print("Looking for pose: ", life_stage, "/", pose_key)
+	#print("Looking for pose: ", life_stage, "/", pose_key)
 	
 	if Traits.POSES.has(life_stage) and Traits.POSES[life_stage].has(pose_key):
 		var pose_list = Traits.POSES[life_stage][pose_key]
-		print("Found ", pose_list.size(), " poses")
+		#print("Found ", pose_list.size(), " poses")
 		if pose_list.size() > 0:
 			return pose_list[randi() % pose_list.size()]
 	
@@ -99,48 +99,41 @@ func get_random_pose() -> Dictionary:
 
 func update_sprites():
 	if current_pose_set.is_empty():
-		# Try one more time before warning
 		current_pose_set = get_random_pose()
 		if current_pose_set.is_empty():
-			# Add helpful debug info
 			push_warning("No pose set for cat %s (Stage: %s, Fur: %s)" % [nick, life_stage, fur_length])
 			return
-		else:
-			# Optional: log successful recovery
-			print("Pose recovered for: ", nick)
 	
 	# Load pose sprite
 	if pose_sprite and current_pose_set.has("pose"):
 		pose_sprite.texture = ResourceLoader.load(current_pose_set["pose"])
 	
-	# Load base texture and apply color modulation
+	# Load base texture and apply color modulation (unchanged)
 	if base_sprite and current_pose_set.has("base"):
 		var base_texture_path = current_pose_set["base"].get("solid", "")
 		if base_texture_path:
 			base_sprite.texture = ResourceLoader.load(base_texture_path)
 			
-			# ==== YOUR COLOR & DILUTION SYSTEM =====
-			# Apply base color first
 			var color_data = Traits.COLORS.get(base_color, {"modulate": "#ffffff"})
 			base_sprite.modulate = Color(color_data.modulate)
 			
-			# Apply dilution on top (REPLACE, not multiply)
 			if dilution != "none" and dilution != "":
 				var dilution_data = Traits.DILUTIONS.get(dilution, {})
 				if dilution_data.has(base_color):
 					base_sprite.modulate = Color(dilution_data[base_color].modulate)
-			# ======================================
-			
-		else:
-			push_warning("No solid base texture found in pose data")
 	
-	# Load eye texture
+	# Load eye texture and apply color modulation (NEW SYSTEM)
 	if eyes_sprite and current_pose_set.has("eyes"):
-		var eye_texture_path = current_pose_set["eyes"].get(eye_color, "")
+		var eye_texture_path = current_pose_set["eyes"].get("default", "")
 		if eye_texture_path:
 			eyes_sprite.texture = ResourceLoader.load(eye_texture_path)
+			
+			# Apply eye color modulation (like base colors)
+			var eye_color_data = Traits.EYE_COLORS.get(eye_color, {"modulate": "#ffffff"})
+			eyes_sprite.modulate = Color(eye_color_data.modulate)
+			
 		else:
-			push_warning("No eye texture found for: ", eye_color)
+			push_warning("No default eye texture found in pose data")
 
 func age_up(months: int = 1):
 	age_months += months

@@ -1,8 +1,8 @@
 class_name Traits
 
-static var NAMELIST = [] # = 4809
-static var WORDLIST = [] # = 1184
-static var SYLLIST = [] # = 29
+static var NAMELIST = [] # = 4583
+static var WORDLIST = [] # = 1114
+static var SYLLIST = [] # = 91
 
 static func _static_init():
 	NAMELIST = load_text_file("res://resources/nameslist.txt")
@@ -17,7 +17,7 @@ const POSES = {
 				"id": "bp1",
 				"pose": "res://sprites/bairnpose1.png",
 				"base": {"solid": "res://sprites/bairnpose1solid.png"},
-				"eyes": {"error": "res://sprites/bairnpose1eyeserror.png", "amber": "res://sprites/bairnpose1eyesamber.png"}
+				"eyes": {"default": "res://sprites/bairnpose1eyes.png"}
 			}
 		]
 	},
@@ -27,7 +27,7 @@ const POSES = {
 				"id": "jp1",
 				"pose": "res://sprites/juvenilepose1.png",
 				"base": {"solid": "res://sprites/juvenilepose1solid.png"},
-				"eyes": {"error": "res://sprites/juvenilepose1eyeserror.png", "amber": "res://sprites/juvenilepose1eyesamber.png"}
+				"eyes": {"default": "res://sprites/juvenilepose1eyes.png"}
 			}
 		],
 		"long": [
@@ -35,7 +35,7 @@ const POSES = {
 				"id": "jp2",
 				"pose": "res://sprites/juvenilepose2.png",
 				"base": {"solid": "res://sprites/juvenilepose2solid.png"},
-				"eyes": {"error": "res://sprites/juvenilepose2eyeserror.png", "amber": "res://sprites/juvenilepose2eyesamber.png"}
+				"eyes": {"default": "res://sprites/juvenilepose2eyes.png"}
 			}
 		]
 	},
@@ -45,13 +45,13 @@ const POSES = {
 				"id": "ap1",
 				"pose": "res://sprites/adultpose1.png",
 				"base": {"solid": "res://sprites/adultpose1solid.png"},
-				"eyes": {"error": "res://sprites/adultpose1eyeserror.png", "amber": "res://sprites/adultpose1eyesamber.png"}
+				"eyes": {"default": "res://sprites/adultpose1eyes.png"}
 			},
 			{
 				"id": "ap2",
 				"pose": "res://sprites/adultpose2.png",
 				"base": {"solid": "res://sprites/adultpose2solid.png"},
-				"eyes": {"error": "res://sprites/adultpose2eyeserror.png", "amber": "res://sprites/adultpose2eyesamber.png"}
+				"eyes": {"default": "res://sprites/adultpose2eyes.png"}
 			}
 		],
 		"long": [
@@ -59,7 +59,7 @@ const POSES = {
 				"id": "ap3",
 				"pose": "res://sprites/adultpose3.png",
 				"base": {"solid": "res://sprites/adultpose3solid.png"},
-				"eyes": {"error": "res://sprites/adultpose3eyeserror.png", "amber": "res://sprites/adultpose3eyesamber.png"}
+				"eyes": {"default": "res://sprites/adultpose3eyes.png"}
 			}
 		]
 	},
@@ -69,7 +69,7 @@ const POSES = {
 				"id": "sp1",
 				"pose": "res://sprites/seniorpose1.png",
 				"base": {"solid": "res://sprites/seniorpose1solid.png"},
-				"eyes": {"error": "res://sprites/seniorpose1eyeserror.png", "amber": "res://sprites/seniorpose1eyesamber.png"}
+				"eyes": {"default": "res://sprites/seniorpose1eyes.png"}
 			}
 		],
 		"long": [
@@ -77,7 +77,7 @@ const POSES = {
 				"id": "sp2",
 				"pose": "res://sprites/seniorpose2.png",
 				"base": {"solid": "res://sprites/seniorpose2solid.png"},
-				"eyes": {"error": "res://sprites/seniorpose2eyeserror.png", "amber": "res://sprites/seniorpose2eyesamber.png"}
+				"eyes": {"default": "res://sprites/seniorpose2eyes.png"}
 			}
 		]
 	}
@@ -111,6 +111,16 @@ const DILUTIONS = {
 		"slate": {"modulate": "#464647"} # iron gray
 	}
 }
+
+const EYE_COLORS = {
+	"amber": {"modulate": "#d19c08"},
+	"hazel": {"modulate": "#9aab3e"},
+	"green": {"modulate": "#42894b"},
+	"blue": {"modulate": "#3076d1"},
+	"cocoa": {"modulate": "a66328"},
+	"dandelion yellow": {"modulate": "ffe17f"}
+}
+
 
 # -- GENDERS --
 

@@ -42,7 +42,7 @@ func spawn_cat(camp_name: String, nick: String = "", gender: String = "", age_mo
 		var gender_keys = Traits.GENDERS.keys()
 		gender = gender_keys[randi() % gender_keys.size()]
 
-	# ---------- RANDOMIZE nick if empty ----------
+# ---------- RANDOMIZE nick if empty ----------
 	if nick.is_empty():
 		var roll = randf()  # 0-1
 		if roll < 0.25:
@@ -54,9 +54,11 @@ func spawn_cat(camp_name: String, nick: String = "", gender: String = "", age_mo
 				raw_name += Nsyllablelist[randi() % Nsyllablelist.size()].to_lower()
 			nick = raw_name.substr(0, 1).to_upper() + raw_name.substr(1)
 		elif roll < 0.5:
-			# 25% chance: prefix/suffix name
+			# 25% chance: prefix/suffix name - with strong chance for single name
 			var Nwordlist = Traits.WORDLIST
-			if randf() < 0.5:
+			var single_name_chance = 0.7  # 70% chance for single name, 30% for two names
+			
+			if randf() < single_name_chance:
 				nick = Nwordlist[randi() % Nwordlist.size()]
 			else:
 				var prefix = Nwordlist[randi() % Nwordlist.size()]
@@ -68,7 +70,6 @@ func spawn_cat(camp_name: String, nick: String = "", gender: String = "", age_mo
 			# 50% chance: manual list
 			var Nnamelist = Traits.NAMELIST
 			nick = Nnamelist[randi() % Nnamelist.size()]
-			
 
 	# ---------- basic data ----------
 	cat.nick = nick
@@ -120,8 +121,11 @@ func spawn_cat(camp_name: String, nick: String = "", gender: String = "", age_mo
 		cat.dilution = "none"  
 
 	# ---------- eye color ----------
-	var eyes_dict = cat.current_pose_set.get("eyes", {})
-	cat.eye_color = get_random_color(eyes_dict, ["error"])  # exclude
+	var eye_color_keys = Traits.EYE_COLORS.keys()
+	if eye_color_keys.is_empty():
+		cat.eye_color = "amber"  # fallback
+	else:
+		cat.eye_color = eye_color_keys[randi() % eye_color_keys.size()]
 
 	# ---------- add to scene ----------
 	# Find the camp this cat belongs to
@@ -265,7 +269,7 @@ func get_random_position(camp_name: String = "", max_attempts: int = 100, min_di
 	return spawn_rect.get_center()
 
 func get_random_position_in_polygon(polygon: PackedVector2Array, offset: Vector2 = Vector2.ZERO, 
-								   max_attempts: int = 50, min_distance: float = 30.0, 
+								   max_attempts: int = 50, min_distance: float = 50.0, 
 								   camp_name: String = "") -> Vector2:
 	if polygon.size() < 3:
 		push_warning("Polygon needs at least 3 points")
@@ -375,7 +379,7 @@ func get_random_color(color_dict: Dictionary, exclude_colors: Array = []) -> Str
 	return available_colors[randi() % available_colors.size()]
 
 func _on_cat_clicked(cat: Cat) -> void:
-	print("CatManager received click for: ", cat.nick)
+	#print("CatManager received click for: ", cat.nick)
 	if is_instance_valid(current_cat_page):
 		current_cat_page.queue_free()
 	

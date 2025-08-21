@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuvdd5ekvombf"
-path="res://.godot/imported/adultpose2eyeserror.png-15003cb809f46c743957fe6128c89c5b.ctex"
+uid="uid://c8ucen0jdxer4"
+path="res://.godot/imported/juvenilepose1eyes.png-d614db8fab86138092f65064e545b6a0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/adultpose2eyeserror.png"
-dest_files=["res://.godot/imported/adultpose2eyeserror.png-15003cb809f46c743957fe6128c89c5b.ctex"]
+source_file="res://sprites/juvenilepose1eyes.png"
+dest_files=["res://.godot/imported/juvenilepose1eyes.png-d614db8fab86138092f65064e545b6a0.ctex"]
 
 [params]
 

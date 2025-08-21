@@ -47,7 +47,7 @@ func show_cat(cat, cat_scene: PackedScene):  # Add parameter here
 
 func _update_info(cat):
 	name_label.text = str(cat.nick)
-	age_label.text = "%s month old %s" % [cat.age_months, cat.life_stage]
+	age_label.text = "%s semester old %s" % [cat.age_months, cat.life_stage]
 	id_label.text = "ID:%s" % cat.id # format = ID:123
 	
 	# Updated coat description
