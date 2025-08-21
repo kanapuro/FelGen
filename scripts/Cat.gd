@@ -2,6 +2,7 @@ extends Node2D
 class_name Cat
 
 # Core traits
+var id: int = -1 # unassigned id
 var nick: String = ""
 var gender: String = ""
 var colony: String = ""
@@ -38,8 +39,15 @@ func _ready():
 	update_sprites()
 	
 	if click_area:
+		# Make sure it's not disabled
 		click_area.input_event.connect(_on_input_event)
-
+		click_area.input_pickable = true  # Ensure it can receive input
+		print("ClickArea setup complete for cat: ", nick)
+	else:
+		push_error("No ClickArea found for cat: ", nick)
+	
+	initialize_colors()
+	update_sprites()
 func _on_input_event(_viewport, event, _shape_idx):
 	print("Input event received: ", event)
 	if event is InputEventMouseButton:
@@ -139,6 +147,7 @@ func age_up(months: int = 1):
 	compute_life_stage()
 
 func set_data_from(other_cat):
+	id = other_cat.id
 	nick = other_cat.nick
 	age_months = other_cat.age_months
 	life_stage = other_cat.life_stage

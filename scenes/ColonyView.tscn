@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://di5qd5vd0l7u7"]
+[gd_scene load_steps=17 format=3 uid="uid://di5qd5vd0l7u7"]
 
-[ext_resource type="PackedScene" uid="uid://bs13fm218nhyk" path="res://scenes/placeholdercamp1.tscn" id="1_slrft"]
+[ext_resource type="PackedScene" uid="uid://bs13fm218nhyk" path="res://scenes/Camps.tscn" id="1_slrft"]
 [ext_resource type="Texture2D" uid="uid://p7325v08yupw" path="res://resources/ui/LIGHT/LIGHTmainborder.png" id="2_y81b7"]
 [ext_resource type="Texture2D" uid="uid://cbgkoueu7maod" path="res://resources/ui/LIGHT/LIGHTtopbar.png" id="3_id520"]
 [ext_resource type="Script" uid="uid://cvp3pd25a5bbf" path="res://scripts/Topbar.gd" id="4_ku7un"]
@@ -13,16 +13,20 @@
 [ext_resource type="Texture2D" uid="uid://b7jwft4nwcat6" path="res://resources/ui/LIGHT/LIGHTmainSETTING2.png" id="11_4p363"]
 [ext_resource type="PackedScene" uid="uid://car2uk10l6ore" path="res://scenes/SettingsScene.tscn" id="12_6pj6d"]
 [ext_resource type="Script" uid="uid://cjdktr5elex5a" path="res://scripts/DebugButtons.gd" id="13_pw51l"]
+[ext_resource type="Script" uid="uid://royst32afwvg" path="res://scripts/CatManager.gd" id="14_pw51l"]
+[ext_resource type="PackedScene" uid="uid://b0ec2nw6t2vxs" path="res://scenes/Cat.tscn" id="15_a0bga"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p6vrc"]
 font = ExtResource("6_vcqf4")
 font_size = 26
 
-[node name="Main" type="Node"]
+[node name="ColonyView" type="Node"]
 
-[node name="CampHolder" type="Node2D" parent="."]
-
-[node name="PlaceholderCamp" parent="." instance=ExtResource("1_slrft")]
+[node name="CampHolder" type="Control" parent="."]
+custom_minimum_size = Vector2(1200, 1000)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 1
 
 [node name="CampUIBorder" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(1200, 1000)
@@ -124,7 +128,7 @@ idle_texture = ExtResource("9_p6vrc")
 active_texture = ExtResource("11_4p363")
 settings_scene = ExtResource("12_6pj6d")
 
-[node name="DebugButtons" type="Control" parent="SharedUIContainer" node_paths=PackedStringArray("timeskip_button", "spawncat_button", "dialoguetester_button")]
+[node name="DebugButtons" type="Control" parent="SharedUIContainer" node_paths=PackedStringArray("timeskip_button", "spawncat_button", "dialoguetester_button", "spawncamp_button")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -132,6 +136,7 @@ script = ExtResource("13_pw51l")
 timeskip_button = NodePath("Timeskip")
 spawncat_button = NodePath("SpawnCat")
 dialoguetester_button = NodePath("DialogueTester")
+spawncamp_button = NodePath("SpawnCamp")
 
 [node name="Timeskip" type="Button" parent="SharedUIContainer/DebugButtons"]
 layout_mode = 0
@@ -149,6 +154,15 @@ offset_right = 1065.0
 offset_bottom = 993.0
 text = "SPAWN CAT"
 
+[node name="SpawnCamp" type="Button" parent="SharedUIContainer/DebugButtons"]
+layout_mode = 0
+offset_left = 1068.0
+offset_top = 856.0
+offset_right = 1183.0
+offset_bottom = 910.0
+text = "SPAWN CAMP
+(USE ONCE)"
+
 [node name="DialogueTester" type="Button" parent="SharedUIContainer/DebugButtons"]
 layout_mode = 0
 offset_left = 1056.0
@@ -156,3 +170,9 @@ offset_top = 912.0
 offset_right = 1188.0
 offset_bottom = 943.0
 text = "dialogue output"
+
+[node name="CatManager" type="Node" parent="." node_paths=PackedStringArray("camp_holder")]
+script = ExtResource("14_pw51l")
+cat_scene = ExtResource("15_a0bga")
+camp_holder = NodePath("../CampHolder")
+camps_scene = ExtResource("1_slrft")

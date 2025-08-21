@@ -8,11 +8,13 @@ var coat_label: Label
 var eyes_label: Label
 var gender_label: Label
 var back_button: Button
+var id_label: Label
 
 func _ready():
 	# Get nodes manually since we can't use $ notation
 	cat_container = get_node("Background/CatDisplay")
 	name_label = get_node("Background/Name")
+	id_label = get_node("Background/ID")
 	age_label = get_node("Background/AppInfoContainer/AppearanceInfo/Age")
 	coat_label = get_node("Background/AppInfoContainer/AppearanceInfo/Fur")
 	eyes_label = get_node("Background/AppInfoContainer/AppearanceInfo/Eyes")
@@ -46,6 +48,7 @@ func show_cat(cat, cat_scene: PackedScene):  # Add parameter here
 func _update_info(cat):
 	name_label.text = str(cat.nick)
 	age_label.text = "%s month old %s" % [cat.age_months, cat.life_stage]
+	id_label.text = "ID:%s" % cat.id # format = ID:123
 	
 	# Updated coat description
 	if cat.dilution == "none":

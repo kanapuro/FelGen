@@ -5,6 +5,7 @@ class_name DebugButtons
 @export var timeskip_button: Button
 @export var spawncat_button: Button
 @export var dialoguetester_button: Button
+@export var spawncamp_button: Button
 
 # Timeskip settings
 @export var spawn_chance: float = 1.0
@@ -17,39 +18,113 @@ func _ready():
 		spawncat_button.pressed.connect(_on_spawncat_pressed)
 	if dialoguetester_button:
 		dialoguetester_button.pressed.connect(_on_dialoguetester_pressed)
+	if spawncamp_button:
+		spawncamp_button.pressed.connect(_on_spawncamp_pressed)
 
 func _on_timeskip_pressed():
 	print("Timeskip pressed - skipping 1 month")
-	var all_camps = get_tree().get_nodes_in_group("camps")
 	
-	for camp in all_camps:
-		# Age all cats in this camp
-		if camp.has_method("time_skip"):
-			camp.time_skip(1) # skip 1 month
-			
-			# Reposition all existing cats in this camp
-			if camp.has_node("CatManager"):
-				var cat_manager = camp.get_node("CatManager") as CatManager
-				for cat in cat_manager.cats:
-					if cat and is_instance_valid(cat):
-						cat.position = cat_manager.get_random_position()
-						print("Repositioned cat in camp: ", camp.name)
+	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
+	if cat_managers.is_empty():
+		push_warning("No CatManager found!")
+		return
+	
+	var cat_manager = cat_managers[0] as CatManager
+	cat_manager.age_all_cats(1)  # Skip 1 month
+	
+	# Reposition all cats in their respective camps WITH PADDING
+	for camp_name in cat_manager.camps:
+		var cats_in_camp = cat_manager.get_cats_in_camp(camp_name)
+		for cat in cats_in_camp:
+			if cat and is_instance_valid(cat):
+				# Use the camp-aware positioning WITH padding
+				cat.position = cat_manager.get_random_position(camp_name, 100, 30.0)  # ← Ensure padding is used
+				print("Repositioned cat in camp: ", camp_name)
 
 func _on_spawncat_pressed():
 	print("SpawnCat pressed - spawning cat in random camp")
-	var all_camps = get_tree().get_nodes_in_group("camps")
 	
-	if all_camps.is_empty():
-		push_warning("No camps found!")
+	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
+	if cat_managers.is_empty():
+		push_warning("No CatManager found!")
 		return
 	
-	# Pick a random camp
-	var random_camp = all_camps[randi() % all_camps.size()]
+	var cat_manager = cat_managers[0] as CatManager
 	
-	if random_camp.has_node("CatManager"):
-		var cat_manager = random_camp.get_node("CatManager") as CatManager
-		cat_manager.spawn_cat("", "", random_camp.name)
-		print("Spawned new cat in camp: ", random_camp.name)
+	# FIX: Get camps from camp_holder, not from the "camps" group!
+	var spawned_camps = cat_manager.camp_holder.get_children()
+	if spawned_camps.is_empty():
+		push_warning("No camps spawned in camp_holder! Spawn a camp first.")
+		return
+	
+	# Pick a random camp from the ACTUAL spawned camps
+	var random_camp = spawned_camps[randi() % spawned_camps.size()]
+	print("Selected camp: '", random_camp.name, "'")
+	
+	# Spawn cat in the selected camp
+	cat_manager.spawn_cat(random_camp.name)
+
+func _on_spawncamp_pressed():
+	print("Spawning camp")
+	
+	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
+	if cat_managers.is_empty():
+		push_error("No CatManager found!")
+		return
+	
+	var cat_manager = cat_managers[0] as CatManager
+	
+	# Just pick from known camp names - no group searching needed
+	var camp_names = ["CampTemplate", "MeadowCampBurrow"]  # Add your actual camp names
+	
+	var random_camp = camp_names[randi() % camp_names.size()]
+	cat_manager.spawn_camp(random_camp, Vector2.ZERO)
+
+func _on_test_spawnareas_pressed():
+	print("=== TESTING SPAWNAREAS ===")
+	
+	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
+	if cat_managers.is_empty():
+		return
+	
+	var cat_manager = cat_managers[0] as CatManager
+	
+	# Check all spawned camps
+	for camp in cat_manager.camp_holder.get_children():
+		print("Camp: ", camp.name)
+		var spawn_area = camp.get_node_or_null("SpawnArea") as Polygon2D
+		if spawn_area:
+			print("  - SpawnArea: ", spawn_area.polygon.size(), " points | Visible: ", spawn_area.visible)
+			# Test if a position can be generated
+			var test_pos = cat_manager.get_random_position_in_polygon(spawn_area.polygon, spawn_area.global_position)
+			print("  - Test position: ", test_pos)
+		else:
+			print("  - No SpawnArea found!")
+	
+	print("=== END TEST ===")
+
+# script for camp switching mechanic
+func _on_switchcamp_pressed():
+	print("Switch Camp pressed")
+	
+	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
+	if cat_managers.is_empty():
+		return
+	
+	var cat_manager = cat_managers[0] as CatManager
+	
+	# Get available camps
+	var available_camps = []
+	for camp in cat_manager.camp_holder.get_children():
+		available_camps.append(camp.name)
+	
+	if available_camps.is_empty():
+		print("No camps available to switch to")
+		return
+	
+	# Switch to a random camp
+	var random_camp = available_camps[randi() % available_camps.size()]
+	cat_manager.switch_current_camp(random_camp)
 
 func _on_dialoguetester_pressed():
 	print("DialogueTester pressed - running dialogue tests")

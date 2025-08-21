@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6rtkj6kpm8fd"]
+[gd_scene load_steps=7 format=3 uid="uid://b6rtkj6kpm8fd"]
 
 [ext_resource type="Texture2D" uid="uid://dg3o57hoy7eel" path="res://resources/ui/LIGHT/LIGHTbackground.png" id="1_d42bg"]
 [ext_resource type="Script" uid="uid://bcxfi7hos02ou" path="res://scripts/CatPage.gd" id="1_sbb08"]
@@ -7,11 +7,18 @@
 [sub_resource type="LabelSettings" id="LabelSettings_sbb08"]
 font = ExtResource("2_exu3d")
 font_size = 26
+font_color = Color(0.996078, 0.960784, 0.917647, 1)
 shadow_size = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_gtprt"]
 font = ExtResource("2_exu3d")
 font_size = 40
+font_color = Color(0.996078, 0.960784, 0.917647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5s11l"]
+font = ExtResource("2_exu3d")
+font_size = 20
+font_color = Color(0.792157, 0.741176, 0.678431, 1)
 
 [node name="CatPage" type="Control"]
 clip_contents = true
@@ -127,6 +134,17 @@ offset_right = 1192.0
 offset_bottom = 87.0
 text = "Big Bobby Bones III"
 label_settings = SubResource("LabelSettings_gtprt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ID" type="Label" parent="Background"]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 1192.0
+offset_bottom = 119.0
+text = "ID:-1"
+label_settings = SubResource("LabelSettings_5s11l")
 horizontal_alignment = 1
 vertical_alignment = 1
 
