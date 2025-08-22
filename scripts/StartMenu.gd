@@ -147,7 +147,7 @@ func _on_button_pressed(event: InputEvent, index: int):
 			1:  # NewPlayButton (index 1)
 				await get_tree().create_timer(0.3).timeout
 				start_new_game()
-			2:  # CreditsButton (index 2)
+			3:  # CreditsButton (index 2)
 				await get_tree().create_timer(0.1).timeout
 				show_contributions()
 			4:  # ExitButton (index 4) - ADD THIS CASE
