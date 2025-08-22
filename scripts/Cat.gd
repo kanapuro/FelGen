@@ -13,6 +13,7 @@ var dilution: String = ""
 
 # Visual traits
 var base_color: String = ""
+var base_pattern: String = ""
 var eye_color: String = ""
 
 # Temporary data

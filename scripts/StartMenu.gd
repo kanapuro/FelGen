@@ -10,14 +10,16 @@ static var pending_position: Vector2 = Vector2.ZERO
 	$ButtonContainer/ContinuePlayButton,
 	$ButtonContainer/NewPlayButton,
 	$ButtonContainer/SettingsButton,
-	$ButtonContainer/CreditsButton
+	$ButtonContainer/CreditsButton,
+	$ButtonContainer/ExitButton
 ]
 
 @onready var labels: Array[Label] = [
 	$ButtonContainer/ContinuePlayLabel,
 	$ButtonContainer/NewPlayLabel,
 	$ButtonContainer/SettingsLabel,
-	$ButtonContainer/CreditsLabel
+	$ButtonContainer/CreditsLabel,
+	$ButtonContainer/ExitLabel
 ]
 
 @onready var version_label: Label = $VersionLabel
@@ -148,6 +150,9 @@ func _on_button_pressed(event: InputEvent, index: int):
 			2:  # CreditsButton (index 2)
 				await get_tree().create_timer(0.1).timeout
 				show_contributions()
+			4:  # ExitButton (index 4) - ADD THIS CASE
+				await get_tree().create_timer(0.1).timeout
+				exit_game()
 			_:
 				await get_tree().create_timer(0.1).timeout
 				menu_item_selected.emit(index)
@@ -180,6 +185,18 @@ func start_new_game():
 	
 	# Change scene
 	get_tree().change_scene_to_file("res://scenes/ColonyView.tscn")
+
+func exit_game():
+	print("Exiting game...")
+	
+	# For web version, we can't quit, so show a message
+	if OS.has_feature("web"):
+		print("Cannot exit on web version")
+		# You could show a message to the player here
+		return
+	
+	# For desktop versions, quit the game
+	get_tree().quit()
 
 func show_contributions():
 	if contributions_window:

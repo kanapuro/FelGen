@@ -107,7 +107,11 @@ func spawn_cat(camp_name: String, nick: String = "", gender: String = "", age_mo
 		push_warning("No colors defined in Traits.COLORS, defaulting to white")
 	else:
 		cat.base_color = get_random_color(Traits.COLORS, ["white"])
-		
+	
+	# ---------- base pattern ----------
+	var base_patterns = ["solid"]  # Add your patterns
+	cat.base_pattern = base_patterns[randi() % base_patterns.size()]
+	
 		# ---------- dilution (OPTIONAL) ----------
 	var dilution_chance = 0.7  # 70%
 	if randf() < dilution_chance:

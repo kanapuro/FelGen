@@ -50,6 +50,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_yx83k")
+disabled_buttons = [0, 2]
 
 [node name="Background Container" type="Control" parent="."]
 anchors_preset = 0
@@ -102,7 +103,7 @@ offset_right = 435.0
 offset_bottom = 496.0
 texture = ExtResource("1_8t08e")
 
-[node name="SettingsButton" type="TextureRect" parent="ButtonContainer"]
+[node name="CreditsButton" type="TextureRect" parent="ButtonContainer"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 608.0
@@ -110,7 +111,15 @@ offset_right = 435.0
 offset_bottom = 672.0
 texture = ExtResource("1_8t08e")
 
-[node name="CreditsButton" type="TextureRect" parent="ButtonContainer"]
+[node name="ExitButton" type="TextureRect" parent="ButtonContainer"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 696.0
+offset_right = 435.0
+offset_bottom = 760.0
+texture = ExtResource("1_8t08e")
+
+[node name="SettingsButton" type="TextureRect" parent="ButtonContainer"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 520.0
@@ -136,7 +145,7 @@ offset_bottom = 479.0
 text = "START NEW WORLD"
 label_settings = SubResource("LabelSettings_j3bqk")
 
-[node name="SettingsLabel" type="Label" parent="ButtonContainer"]
+[node name="CreditsLabel" type="Label" parent="ButtonContainer"]
 layout_mode = 0
 offset_left = 112.0
 offset_top = 632.0
@@ -145,7 +154,16 @@ offset_bottom = 655.0
 text = "VIEW CONTRIBUTIONS"
 label_settings = SubResource("LabelSettings_j3bqk")
 
-[node name="CreditsLabel" type="Label" parent="ButtonContainer"]
+[node name="ExitLabel" type="Label" parent="ButtonContainer"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 720.0
+offset_right = 320.0
+offset_bottom = 743.0
+text = "EXIT GAME"
+label_settings = SubResource("LabelSettings_j3bqk")
+
+[node name="SettingsLabel" type="Label" parent="ButtonContainer"]
 layout_mode = 0
 offset_left = 136.0
 offset_top = 544.0

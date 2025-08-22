@@ -60,7 +60,13 @@ const POSES = {
 				"pose": "res://sprites/adultpose3.png",
 				"base": {"solid": "res://sprites/adultpose3solid.png"},
 				"eyes": {"default": "res://sprites/adultpose3eyes.png"}
-			}
+			},
+			{
+				"id": "ap4",
+				"pose": "res://sprites/adultpose4.png",
+				"base": {"solid": "res://sprites/adultpose4solid.png"},
+				"eyes": {"default": "res://sprites/adultpose4eyes.png"}
+			},
 		]
 	},
 	"senior": {
@@ -85,30 +91,30 @@ const POSES = {
 
 const COLORS = { # base must be rich, warm, and earthy, SECOND LIGHTEST
 	"white": {"modulate": "#ffffff"}, # DEBUG: should never show up
-	"russet": {"modulate": "#cc5500"}, # old: e3812b, terra cotta orange
-	"ebony": {"modulate": "#3d3d3d"}, # dark charcoal
-	"taupe": {"modulate": "#756556"}, # dark taupe
-	"slate": {"modulate": "#708090"} # blue-gray
+	"russet": {"modulate": "#cc5500"}, # old: e3812b
+	"ebony": {"modulate": "#3d3d3d"},
+	"taupe": {"modulate": "#756556"},
+	"slate": {"modulate": "#708090"} 
 }
 
 const DILUTIONS = {
 	"thinned": { # thinned dilution / thin dilute color | LIGHT, WASHED OUT, CREAMY, LIGHTEST
-		"russet": {"modulate": "#e8b98d"}, # old: e3bb76, apricot cream
-		"ebony": {"modulate": "#7d7d7d"}, # medium gray
-		"taupe": {"modulate": "#d2b48c"}, # fawn beige
-		"slate": {"modulate": "#d3d3d3"} # light silver
+		"russet": {"modulate": "#e8b98d"}, # old: e3bb76
+		"ebony": {"modulate": "#7d7d7d"},
+		"taupe": {"modulate": "#d2b48c"},
+		"slate": {"modulate": "#d3d3d3"}
 	},
 	"caramelized": { # caramelized dilution / caramel dilute color | DEEPER, REDDER, DEEPEST
-		"russet": {"modulate": "#a34212"}, # old: e05200, burnt sienna
-		"ebony": {"modulate": "#5c4033"}, # warm brown-black
-		"taupe": {"modulate": "#7b3f00"}, # chocolate
-		"slate": {"modulate": "#5d8aa8"} # steel blue
+		"russet": {"modulate": "#a34212"}, # old: e05200
+		"ebony": {"modulate": "#5c4033"},
+		"taupe": {"modulate": "#7b3f00"},
+		"slate": {"modulate": "#5d8aa8"}
 	},
 	"intensified": { # intensified dilution / intense dilute color | VIBRANT, BRIGHT, SECOND DEEPEST
-		"russet": {"modulate": "#ff7b24"},  # old: ff9500, pumpkin orange
-		"ebony": {"modulate": "#1a1a1a"}, # near black
-		"taupe": {"modulate": "#4d1d05"}, # mahogany
-		"slate": {"modulate": "#464647"} # iron gray
+		"russet": {"modulate": "#ff7b24"},  # old: ff9500
+		"ebony": {"modulate": "#1a1a1a"},
+		"taupe": {"modulate": "#4d1d05"},
+		"slate": {"modulate": "#464647"}
 	}
 }
 

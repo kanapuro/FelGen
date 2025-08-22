@@ -48,13 +48,13 @@ func show_cat(cat, cat_scene: PackedScene):  # Add parameter here
 func _update_info(cat):
 	name_label.text = str(cat.nick)
 	age_label.text = "%s semester old %s" % [cat.age_months, cat.life_stage]
-	id_label.text = "ID:%s" % cat.id # format = ID:123
+	id_label.text = "ID:%s" % cat.id
 	
-	# Updated coat description
+	# Use the base_pattern variable directly
 	if cat.dilution == "none":
-		coat_label.text = "%s %s coat" % [cat.fur_length, cat.base_color]
+		coat_label.text = "%s %s %s coat" % [cat.base_pattern, cat.fur_length, cat.base_color]
 	else:
-		coat_label.text = "%s %s coat with %s dilution" % [cat.fur_length, cat.base_color, cat.dilution]
+		coat_label.text = "%s %s %s coat with %s dilution" % [cat.base_pattern, cat.fur_length, cat.base_color, cat.dilution]
 	
 	eyes_label.text = "%s eyes" % cat.eye_color
 	gender_label.text = "of the %s" % cat.gender

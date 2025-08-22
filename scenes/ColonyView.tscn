@@ -53,52 +53,74 @@ offset_top = 72.0
 offset_right = 976.0
 offset_bottom = 128.0
 script = ExtResource("4_ku7un")
-buttons = [NodePath("LeftButton"), NodePath("MiddleButton"), NodePath("RightButton")]
-labels = [NodePath("LeftLabel"), NodePath("MiddleLabel"), NodePath("RightLabel")]
+buttons = [NodePath("LeftButton"), NodePath("MiddleButton1"), NodePath("MiddleButton2"), NodePath("RightButton")]
+labels = [NodePath("LeftLabel"), NodePath("MiddleLabel1"), NodePath("MiddleLabel2"), NodePath("RightLabel")]
 
 [node name="LeftButton" type="TextureRect" parent="SharedUIContainer/TabManager"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_right = 256.0
+offset_left = -4.0
+offset_right = 192.0
 offset_bottom = 56.0
 texture = ExtResource("4_y81b7")
 
-[node name="MiddleButton" type="TextureRect" parent="SharedUIContainer/TabManager"]
+[node name="MiddleButton1" type="TextureRect" parent="SharedUIContainer/TabManager"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 261.0
+offset_left = 196.0
 offset_top = 3.0
-offset_right = 481.0
+offset_right = 366.0
+offset_bottom = 53.0
+texture = ExtResource("5_61481")
+
+[node name="MiddleButton2" type="TextureRect" parent="SharedUIContainer/TabManager"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 371.0
+offset_top = 3.0
+offset_right = 541.0
 offset_bottom = 53.0
 texture = ExtResource("5_61481")
 
 [node name="RightButton" type="TextureRect" parent="SharedUIContainer/TabManager"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 486.0
+offset_left = 546.0
 offset_top = 3.0
-offset_right = 752.0
+offset_right = 751.0
 offset_bottom = 53.0
 texture = ExtResource("6_ku7un")
 
 [node name="LeftLabel" type="Label" parent="SharedUIContainer/TabManager"]
 modulate = Color(0.996078, 0.960784, 0.917647, 1)
 layout_mode = 0
-offset_left = -4.0
+offset_left = -8.0
 offset_top = -2.0
-offset_right = 258.0
+offset_right = 192.0
 offset_bottom = 58.0
 text = "EVENTS"
 label_settings = SubResource("LabelSettings_p6vrc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MiddleLabel" type="Label" parent="SharedUIContainer/TabManager"]
+[node name="MiddleLabel1" type="Label" parent="SharedUIContainer/TabManager"]
 modulate = Color(0.996078, 0.960784, 0.917647, 1)
 layout_mode = 0
-offset_left = 258.0
+offset_left = 192.0
 offset_top = -2.0
-offset_right = 484.0
+offset_right = 368.0
+offset_bottom = 58.0
+text = "CAMP"
+label_settings = SubResource("LabelSettings_p6vrc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MiddleLabel2" type="Label" parent="SharedUIContainer/TabManager"]
+modulate = Color(0.996078, 0.960784, 0.917647, 1)
+layout_mode = 0
+offset_left = 366.0
+offset_top = -2.0
+offset_right = 542.0
 offset_bottom = 58.0
 text = "COLONY"
 label_settings = SubResource("LabelSettings_p6vrc")
@@ -108,7 +130,7 @@ vertical_alignment = 1
 [node name="RightLabel" type="Label" parent="SharedUIContainer/TabManager"]
 modulate = Color(0.996078, 0.960784, 0.917647, 1)
 layout_mode = 0
-offset_left = 483.0
+offset_left = 544.0
 offset_top = -2.0
 offset_right = 756.0
 offset_bottom = 58.0
