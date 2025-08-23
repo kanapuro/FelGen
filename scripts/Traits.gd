@@ -1,22 +1,15 @@
 class_name Traits
 
-static var NAMELIST = [] # = 4583
-static var WORDLIST = [] # = 1114
-static var SYLLIST = [] # = 91
+#region Constants - Organized by Category
 
-static func _static_init():
-	NAMELIST = load_text_file("res://resources/nameslist.txt")
-	WORDLIST = load_text_file("res://resources/wordslist.txt") 
-	SYLLIST = load_text_file("res://resources/sylllist.txt")
-
-# Pose dictionary by life stage + fur length
+## Poses organized by life stage and fur length
 const POSES = {
 	"bairn": {
 		"short": [
 			{
 				"id": "bp1",
 				"pose": "res://sprites/bairnpose1.png",
-				"base": {"solid": "res://sprites/bairnpose1solid.png"},
+				"base": {"solid": "res://sprites/bairnpose1solid.png", "smokeback": "res://sprites/bairnpose1smokeback.png"},
 				"eyes": {"default": "res://sprites/bairnpose1eyes.png"}
 			}
 		]
@@ -26,7 +19,7 @@ const POSES = {
 			{
 				"id": "jp1",
 				"pose": "res://sprites/juvenilepose1.png",
-				"base": {"solid": "res://sprites/juvenilepose1solid.png"},
+				"base": {"solid": "res://sprites/juvenilepose1solid.png", "smokeback": "res://sprites/juvenilepose1smokeback.png"},
 				"eyes": {"default": "res://sprites/juvenilepose1eyes.png"}
 			}
 		],
@@ -34,7 +27,7 @@ const POSES = {
 			{
 				"id": "jp2",
 				"pose": "res://sprites/juvenilepose2.png",
-				"base": {"solid": "res://sprites/juvenilepose2solid.png"},
+				"base": {"solid": "res://sprites/juvenilepose2solid.png", "smokeback": "res://sprites/juvenilepose2smokeback.png"},
 				"eyes": {"default": "res://sprites/juvenilepose2eyes.png"}
 			}
 		]
@@ -44,13 +37,13 @@ const POSES = {
 			{
 				"id": "ap1",
 				"pose": "res://sprites/adultpose1.png",
-				"base": {"solid": "res://sprites/adultpose1solid.png"},
+				"base": {"solid": "res://sprites/adultpose1solid.png", "smokeback": "res://sprites/adultpose1smokeback.png"},
 				"eyes": {"default": "res://sprites/adultpose1eyes.png"}
 			},
 			{
 				"id": "ap2",
 				"pose": "res://sprites/adultpose2.png",
-				"base": {"solid": "res://sprites/adultpose2solid.png"},
+				"base": {"solid": "res://sprites/adultpose2solid.png", "smokeback": "res://sprites/adultpose2smokeback.png"},
 				"eyes": {"default": "res://sprites/adultpose2eyes.png"}
 			}
 		],
@@ -58,13 +51,13 @@ const POSES = {
 			{
 				"id": "ap3",
 				"pose": "res://sprites/adultpose3.png",
-				"base": {"solid": "res://sprites/adultpose3solid.png"},
+				"base": {"solid": "res://sprites/adultpose3solid.png", "smokeback": "res://sprites/adultpose3smokeback.png"},
 				"eyes": {"default": "res://sprites/adultpose3eyes.png"}
 			},
 			{
 				"id": "ap4",
 				"pose": "res://sprites/adultpose4.png",
-				"base": {"solid": "res://sprites/adultpose4solid.png"},
+				"base": {"solid": "res://sprites/adultpose4solid.png", "smokeback": "res://sprites/adultpose4smokeback.png"},
 				"eyes": {"default": "res://sprites/adultpose4eyes.png"}
 			},
 		]
@@ -74,7 +67,7 @@ const POSES = {
 			{
 				"id": "sp1",
 				"pose": "res://sprites/seniorpose1.png",
-				"base": {"solid": "res://sprites/seniorpose1solid.png"},
+				"base": {"solid": "res://sprites/seniorpose1solid.png", "smokeback": "res://sprites/seniorpose1smokeback.png"},
 				"eyes": {"default": "res://sprites/seniorpose1eyes.png"}
 			}
 		],
@@ -82,14 +75,15 @@ const POSES = {
 			{
 				"id": "sp2",
 				"pose": "res://sprites/seniorpose2.png",
-				"base": {"solid": "res://sprites/seniorpose2solid.png"},
+				"base": {"solid": "res://sprites/seniorpose2solid.png", "smokeback": "res://sprites/seniorpose2smokeback.png"},
 				"eyes": {"default": "res://sprites/seniorpose2eyes.png"}
 			}
 		]
 	}
 }
 
-const COLORS = { # base must be rich, warm, and earthy, SECOND LIGHTEST
+## Base colors - rich, warm, and earthy (SECOND LIGHTEST)
+const COLORS = {
 	"white": {"modulate": "#ffffff"}, # DEBUG: should never show up
 	"russet": {"modulate": "#cc5500"}, # old: e3812b
 	"ebony": {"modulate": "#3d3d3d"},
@@ -97,20 +91,21 @@ const COLORS = { # base must be rich, warm, and earthy, SECOND LIGHTEST
 	"slate": {"modulate": "#708090"} 
 }
 
+## Dilution variations for each base color
 const DILUTIONS = {
-	"thinned": { # thinned dilution / thin dilute color | LIGHT, WASHED OUT, CREAMY, LIGHTEST
+	"thinned": { # LIGHT, WASHED OUT, CREAMY, LIGHTEST
 		"russet": {"modulate": "#e8b98d"}, # old: e3bb76
 		"ebony": {"modulate": "#7d7d7d"},
 		"taupe": {"modulate": "#d2b48c"},
 		"slate": {"modulate": "#d3d3d3"}
 	},
-	"caramelized": { # caramelized dilution / caramel dilute color | DEEPER, REDDER, DEEPEST
+	"caramelized": { # DEEPER, REDDER, DEEPEST
 		"russet": {"modulate": "#a34212"}, # old: e05200
 		"ebony": {"modulate": "#5c4033"},
 		"taupe": {"modulate": "#7b3f00"},
 		"slate": {"modulate": "#5d8aa8"}
 	},
-	"intensified": { # intensified dilution / intense dilute color | VIBRANT, BRIGHT, SECOND DEEPEST
+	"intensified": { # VIBRANT, BRIGHT, SECOND DEEPEST
 		"russet": {"modulate": "#ff7b24"},  # old: ff9500
 		"ebony": {"modulate": "#1a1a1a"},
 		"taupe": {"modulate": "#4d1d05"},
@@ -118,18 +113,17 @@ const DILUTIONS = {
 	}
 }
 
+## Eye colors
 const EYE_COLORS = {
 	"amber": {"modulate": "#d19c08"},
 	"hazel": {"modulate": "#9aab3e"},
 	"green": {"modulate": "#42894b"},
 	"blue": {"modulate": "#3076d1"},
-	"cocoa": {"modulate": "a66328"},
-	"dandelion yellow": {"modulate": "ffe17f"}
+	"cocoa": {"modulate": "#a66328"}, # Fixed missing #
+	"dandelion yellow": {"modulate": "#ffe17f"} # Fixed missing #
 }
 
-
-# -- GENDERS --
-
+## Gender pronouns and verb conjugations
 const GENDERS = {
 	"veil": {
 		"subj": "they",
@@ -139,7 +133,7 @@ const GENDERS = {
 		"reflex": "themself",
 		"verb_suffix": ""
 	},
-		"bloom": {
+	"bloom": {
 		"subj": "she",
 		"obj": "her",
 		"poss_adj": "her",
@@ -147,7 +141,7 @@ const GENDERS = {
 		"reflex": "herself",
 		"verb_suffix": "s"
 	},
-		"stone": {
+	"stone": {
 		"subj": "he",
 		"obj": "him",
 		"poss_adj": "his",
@@ -155,7 +149,7 @@ const GENDERS = {
 		"reflex": "himself",
 		"verb_suffix": "s"
 	},
-		"solstice": {
+	"solstice": {
 		"subj": "sol",
 		"obj": "solis",
 		"poss_adj": "sols",
@@ -163,7 +157,7 @@ const GENDERS = {
 		"reflex": "soliself",
 		"verb_suffix": "s"
 	},
-		"cinders": {
+	"cinders": {
 		"subj": "cin",
 		"obj": "cind",
 		"poss_adj": "cinds",
@@ -171,7 +165,7 @@ const GENDERS = {
 		"reflex": "cindself",
 		"verb_suffix": "s"
 	},
-		"ashes": {
+	"ashes": {
 		"subj": "ashe",
 		"obj": "ashe",
 		"poss_adj": "ashes",
@@ -180,15 +174,50 @@ const GENDERS = {
 		"verb_suffix": "s"
 	}
 }
-static var IRREGULAR_VERBS = {
+
+## Irregular verb conjugations
+const IRREGULAR_VERBS = {
 	"go": "goes",
 	"do": "does",
 	"have": "has",
 	"be": "is",
-	# add more as needed
 }
-# --- GENDER TEMPLATES ---
-# Static dialogue function
+
+#endregion
+
+#region Static Variables
+static var NAMELIST: Array = [] # = 4588
+static var WORDLIST: Array = [] # = 1115  
+static var SYLLIST: Array = [] # = 91
+#endregion
+
+#region Initialization
+static func _static_init():
+	NAMELIST = _load_text_file("res://resources/nameslist.txt")
+	WORDLIST = _load_text_file("res://resources/wordslist.txt") 
+	SYLLIST = _load_text_file("res://resources/sylllist.txt")
+#endregion
+
+#region File Operations
+static func _load_text_file(path: String) -> Array:
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		push_error("Failed to load file: " + path)
+		return []
+	
+	var lines = []
+	while not file.eof_reached():
+		var line = file.get_line().strip_edges()
+		if line != "":
+			lines.append(line)
+	
+	file.close()
+	print("Loaded ", lines.size(), " lines from: ", path)
+	return lines
+#endregion
+
+#region Gender/Dialogue Utilities
+## Fills a dialogue template with appropriate pronouns and verb conjugations
 static func fill_dialogue(template: String, gender: String) -> String:
 	if not GENDERS.has(gender):
 		gender = "veil"
@@ -207,31 +236,22 @@ static func fill_dialogue(template: String, gender: String) -> String:
 	for match in matches:
 		var verb = match.strings[1]
 		if GENDERS[gender].verb_suffix != "":
-			# Check irregular first
-			if IRREGULAR_VERBS.has(verb):
-				verb = IRREGULAR_VERBS[verb]
-			else:
-				# normal s/es rule
-				if verb.ends_with("s") or verb.ends_with("x") or verb.ends_with("z"):
-					verb += "es"
-				else:
-					verb += GENDERS[gender].verb_suffix
+			verb = _conjugate_verb(verb, gender)
 		result = result.replace(match.strings[0], verb)
 
 	return result
 
-static func load_text_file(path: String) -> Array:
-	var file = FileAccess.open(path, FileAccess.READ)
-	if file == null:
-		push_error("Failed to load file: " + path)
-		return []
+## Conjugates a verb based on gender rules
+static func _conjugate_verb(verb: String, gender: String) -> String:
+	if IRREGULAR_VERBS.has(verb):
+		return IRREGULAR_VERBS[verb]
 	
-	var lines = []
-	while not file.eof_reached():
-		var line = file.get_line().strip_edges()
-		if line != "":
-			lines.append(line)
+	if GENDERS[gender].verb_suffix != "":
+		# Apply normal s/es rule
+		if verb.ends_with("s") or verb.ends_with("x") or verb.ends_with("z"):
+			return verb + "es"
+		else:
+			return verb + GENDERS[gender].verb_suffix
 	
-	file.close()
-	print("Loaded ", lines.size(), " lines from: ", path)
-	return lines
+	return verb
+#endregion

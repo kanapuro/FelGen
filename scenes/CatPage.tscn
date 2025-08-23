@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6rtkj6kpm8fd"]
+[gd_scene load_steps=10 format=3 uid="uid://b6rtkj6kpm8fd"]
 
 [ext_resource type="Texture2D" uid="uid://dg3o57hoy7eel" path="res://resources/ui/LIGHT/LIGHTbackground.png" id="1_d42bg"]
 [ext_resource type="Script" uid="uid://bcxfi7hos02ou" path="res://scripts/CatPage.gd" id="1_sbb08"]
 [ext_resource type="FontFile" uid="uid://bd5jlefpj0cvq" path="res://resources/ui/runescape_uf.ttf" id="2_exu3d"]
+[ext_resource type="Texture2D" uid="uid://bjbah7ybu7snf" path="res://resources/ui/LIGHT/LIGHTarrow1.png" id="4_uy5bs"]
+[ext_resource type="Script" uid="uid://dvxj426qemfm4" path="res://scripts/CloseUI.gd" id="5_8erm5"]
+[ext_resource type="Texture2D" uid="uid://dynm253ec4jep" path="res://resources/ui/LIGHT/LIGHTarrow2.png" id="6_h3axc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sbb08"]
 font = ExtResource("2_exu3d")
@@ -148,10 +151,13 @@ label_settings = SubResource("LabelSettings_5s11l")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BackButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 14.0
-offset_right = 130.0
-offset_bottom = 61.0
-text = "<- BACK"
+[node name="BackButton" type="TextureButton" parent="."]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 80.0
+offset_bottom = 80.0
+texture_normal = ExtResource("4_uy5bs")
+stretch_mode = 0
+script = ExtResource("5_8erm5")
+idle_texture = ExtResource("4_uy5bs")
+active_texture = ExtResource("6_h3axc")

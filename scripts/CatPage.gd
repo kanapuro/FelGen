@@ -1,64 +1,78 @@
 extends Control
+class_name CatPage
 
-# Node references - REMOVE @onready since we're not in a scene
-var cat_container: Control
-var name_label: Label
-var age_label: Label
-var coat_label: Label
-var eyes_label: Label
-var gender_label: Label
-var back_button: Button
-var id_label: Label
+#region Node References
+@onready var cat_container: Control = $Background/CatDisplay
+@onready var name_label: Label = $Background/Name
+@onready var id_label: Label = $Background/ID
+@onready var age_label: Label = $Background/AppInfoContainer/AppearanceInfo/Age
+@onready var coat_label: Label = $Background/AppInfoContainer/AppearanceInfo/Fur
+@onready var eyes_label: Label = $Background/AppInfoContainer/AppearanceInfo/Eyes
+@onready var gender_label: Label = $Background/PsychInfoContainer/PsychologyInfo/Gender
+#endregion
 
+#region Constants
+const CAT_SCALE := Vector2(2, 2)
+#endregion
+
+#region Lifecycle
 func _ready():
-	# Get nodes manually since we can't use $ notation
-	cat_container = get_node("Background/CatDisplay")
-	name_label = get_node("Background/Name")
-	id_label = get_node("Background/ID")
-	age_label = get_node("Background/AppInfoContainer/AppearanceInfo/Age")
-	coat_label = get_node("Background/AppInfoContainer/AppearanceInfo/Fur")
-	eyes_label = get_node("Background/AppInfoContainer/AppearanceInfo/Eyes")
-	gender_label = get_node("Background/PsychInfoContainer/PsychologyInfo/Gender")
-	back_button = get_node("BackButton")
-	
-	# Debug node connections
-	print("Back button connected: ", back_button.pressed.connect(_on_BackButton_pressed) == OK)
-	
 	hide()
 
-func show_cat(cat, cat_scene: PackedScene):  # Add parameter here
+func show_cat(cat: Cat, cat_scene: PackedScene):
 	print_debug("Attempting to show cat: ", cat.nick)
 	
-	# Clear previous cat
+	_clear_previous_cat()
+	_create_cat_display(cat, cat_scene)
+	_update_info_display(cat)
+	show()
+	
+	print_debug("Cat page shown for: ", cat.nick)
+#endregion
+
+#region Cat Display
+func _clear_previous_cat():
 	for child in cat_container.get_children():
 		child.queue_free()
-	
-	# REMOVE the cat_manager line - use the passed cat_scene directly
-	var cat_copy = cat_scene.instantiate() as Cat  # Use the parameter
+
+func _create_cat_display(cat: Cat, cat_scene: PackedScene):
+	var cat_copy := cat_scene.instantiate() as Cat
 	cat_copy.set_data_from(cat)
 	cat_container.add_child(cat_copy)
+	
+	# Position and scale the cat display
 	cat_copy.position = cat_container.size / 2
-	cat_copy.scale = Vector2(2, 2)
-	
-	# Update info display
-	_update_info(cat)
-	show()
-	print_debug("Cat page shown for: ", cat.nick)
+	cat_copy.scale = CAT_SCALE
+#endregion
 
-func _update_info(cat):
+#region Info Display
+func _update_info_display(cat: Cat):
+	_update_basic_info(cat)
+	_update_appearance_info(cat)
+	_update_eyes_info(cat)
+	_update_gender_info(cat)
+
+func _update_basic_info(cat: Cat):
 	name_label.text = str(cat.nick)
-	age_label.text = "%s semester old %s" % [cat.age_months, cat.life_stage]
 	id_label.text = "ID:%s" % cat.id
-	
-	# Use the base_pattern variable directly
-	if cat.dilution == "none":
-		coat_label.text = "%s %s %s coat" % [cat.base_pattern, cat.fur_length, cat.base_color]
-	else:
-		coat_label.text = "%s %s %s coat with %s dilution" % [cat.base_pattern, cat.fur_length, cat.base_color, cat.dilution]
-	
-	eyes_label.text = "%s eyes" % cat.eye_color
-	gender_label.text = "of the %s" % cat.gender
+	age_label.text = "%s semester old %s" % [cat.age_months, cat.life_stage]
 
-func _on_BackButton_pressed():
-	print_debug("Back button pressed")
-	queue_free()
+func _update_appearance_info(cat: Cat):
+	var coat_text: String
+	if cat.dilution == "none":
+		coat_text = "%s %s %s coat" % [cat.fur_length, cat.base_color, cat.base_pattern]
+	else:
+		coat_text = "%s %s %s coat with %s dilution" % [cat.fur_length, cat.base_color, cat.base_pattern, cat.dilution]
+	coat_label.text = coat_text
+
+func _update_eyes_info(cat: Cat):
+	var eyes_text: String
+	if cat.eye_pattern == "default":
+		eyes_text = "%s eyes" % cat.eye_color
+	else:
+		eyes_text = "%s %s eyes" % [cat.eye_pattern, cat.eye_color]
+	eyes_label.text = eyes_text
+
+func _update_gender_info(cat: Cat):
+	gender_label.text = "of the %s" % cat.gender
+#endregion

@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://c3060v0xiijx4"]
+[gd_scene load_steps=15 format=3 uid="uid://c3060v0xiijx4"]
 
 [ext_resource type="Texture2D" uid="uid://cmgjqfkohbvvn" path="res://resources/ui/LIGHT/LIGHTgeneralbutton.png" id="1_8t08e"]
 [ext_resource type="FontFile" uid="uid://bd5jlefpj0cvq" path="res://resources/ui/runescape_uf.ttf" id="1_j3bqk"]
 [ext_resource type="Script" uid="uid://bnufschp8ikoh" path="res://scripts/StartMenu.gd" id="1_yx83k"]
 [ext_resource type="FontFile" uid="uid://43xl6ont5uwe" path="res://resources/ui/Early GameBoy.ttf" id="3_yx83k"]
 [ext_resource type="Texture2D" uid="uid://dg3o57hoy7eel" path="res://resources/ui/LIGHT/LIGHTbackground.png" id="5_lynlw"]
+[ext_resource type="Texture2D" uid="uid://s3ifsp61trsj" path="res://resources/ui/LIGHT/LIGHTx1.png" id="6_h1lxu"]
 
 [sub_resource type="Gradient" id="Gradient_fx3ca"]
 offsets = PackedFloat32Array(0.00649351, 1)
@@ -41,6 +42,7 @@ font_color = Color(0.792157, 0.741176, 0.678431, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_yrm6t"]
 font = ExtResource("3_yx83k")
+font_size = 20
 font_color = Color(0.435294, 0.407843, 0.478431, 1)
 
 [node name="Start" type="Control"]
@@ -182,20 +184,12 @@ text = "Version %DISPLAYERROR"
 label_settings = SubResource("LabelSettings_h1lxu")
 
 [node name="Contributions" type="TextureRect" parent="."]
-layout_mode = 0
+visible = false
 offset_left = 640.0
 offset_top = 256.0
 offset_right = 1152.0
 offset_bottom = 960.0
 texture = ExtResource("5_lynlw")
-
-[node name="ExitButton" type="Button" parent="Contributions"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 40.0
-offset_bottom = 39.0
-text = "X"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Contributions"]
 layout_mode = 0
@@ -220,9 +214,19 @@ autowrap_mode = 3
 
 [node name="Title" type="Label" parent="Contributions"]
 layout_mode = 0
-offset_left = 104.0
-offset_top = 8.0
-offset_right = 416.0
-offset_bottom = 31.0
+offset_left = 64.0
+offset_top = 27.0
+offset_right = 504.0
+offset_bottom = 52.0
 text = "BELOVED CONTRIBUTORS"
 label_settings = SubResource("LabelSettings_yrm6t")
+horizontal_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="Contributions"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 64.0
+offset_bottom = 64.0
+texture_normal = ExtResource("6_h1lxu")
+stretch_mode = 0

@@ -1,134 +1,94 @@
 extends Control
 class_name DebugButtons
 
-# Button references - assign these in the inspector
+#region Exports
 @export var timeskip_button: Button
 @export var spawncat_button: Button
 @export var dialoguetester_button: Button
-@export var spawncamp_button: Button
 
-# Timeskip settings
 @export var spawn_chance: float = 1.0
+@export var timeskip_months: int = 1
+@export var reposition_padding: float = 30.0
+#endregion
 
+#region Constants
+const DIALOGUE_TEMPLATE := "{{subj}} {{verb:go}} hunting and {{subj}} {{verb:find}} a rabbit. {{subj}} {{verb:eat}} it quickly."
+#endregion
+
+#region Lifecycle
 func _ready():
-	# Connect buttons if they exist
+	_connect_buttons()
+
+func _connect_buttons():
 	if timeskip_button:
 		timeskip_button.pressed.connect(_on_timeskip_pressed)
 	if spawncat_button:
 		spawncat_button.pressed.connect(_on_spawncat_pressed)
 	if dialoguetester_button:
 		dialoguetester_button.pressed.connect(_on_dialoguetester_pressed)
+#endregion
 
+#region Button Handlers
 func _on_timeskip_pressed():
-	print("Timeskip pressed - skipping 1 month")
-	
-	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
-	if cat_managers.is_empty():
-		push_warning("No CatManager found!")
+	print("Timeskip pressed - skipping ", timeskip_months, " month(s)")
+	_timeskip_all_cats()
+
+func _on_spawncat_pressed():
+	print("SpawnCat pressed - spawning cat in random camp")
+	_spawn_random_cat()
+
+func _on_dialoguetester_pressed():
+	print("DialogueTester pressed - running dialogue tests")
+	_test_all_genders_dialogue()
+#endregion
+
+#region Debug Functions
+func _timeskip_all_cats():
+	var cat_manager := _get_cat_manager()
+	if not cat_manager:
 		return
 	
-	var cat_manager = cat_managers[0] as CatManager
-	cat_manager.age_all_cats(1)  # Skip 1 month
-	
-	# Reposition all cats in their respective camps WITH PADDING
+	cat_manager.age_all_cats(timeskip_months)
+	_reposition_all_cats(cat_manager)
+
+func _reposition_all_cats(cat_manager: CatManager):
 	for camp_name in cat_manager.camps:
 		var cats_in_camp = cat_manager.get_cats_in_camp(camp_name)
 		for cat in cats_in_camp:
 			if cat and is_instance_valid(cat):
-				# Use the camp-aware positioning WITH padding
-				cat.position = cat_manager.get_random_position(camp_name, 100, 30.0)  # ← Ensure padding is used
+				cat.position = cat_manager.get_random_position(camp_name, 100, reposition_padding)
 				print("Repositioned cat in camp: ", camp_name)
 
-func _on_spawncat_pressed():
-	print("SpawnCat pressed - spawning cat in random camp")
-	
-	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
-	if cat_managers.is_empty():
-		push_warning("No CatManager found!")
+func _spawn_random_cat():
+	var cat_manager := _get_cat_manager()
+	if not cat_manager:
 		return
 	
-	var cat_manager = cat_managers[0] as CatManager
-	
-	# FIX: Get camps from camp_holder, not from the "camps" group!
-	var spawned_camps = cat_manager.camp_holder.get_children()
+	var spawned_camps := cat_manager.camp_holder.get_children()
 	if spawned_camps.is_empty():
 		push_warning("No camps spawned in camp_holder! Spawn a camp first.")
 		return
 	
-	# Pick a random camp from the ACTUAL spawned camps
-	var random_camp = spawned_camps[randi() % spawned_camps.size()]
+	var random_camp := spawned_camps.pick_random() as Node
 	print("Selected camp: '", random_camp.name, "'")
-	
-	# Spawn cat in the selected camp
 	cat_manager.spawn_cat(random_camp.name)
 
-func _on_test_spawnareas_pressed():
-	print("=== TESTING SPAWNAREAS ===")
+func _test_all_genders_dialogue():
+	var genders := ["veil", "bloom", "stone", "solstice", "cinders", "ashes"]
 	
-	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
+	for gender in genders:
+		var dialogue := Traits.fill_dialogue(DIALOGUE_TEMPLATE, gender)
+		print(gender.capitalize(), ": ", dialogue)
+#endregion
+
+#region Utilities
+func _get_cat_manager() -> CatManager:
+	var cat_managers := get_tree().get_nodes_in_group("cat_managers")
 	if cat_managers.is_empty():
-		return
-	
-	var cat_manager = cat_managers[0] as CatManager
-	
-	# Check all spawned camps
-	for camp in cat_manager.camp_holder.get_children():
-		print("Camp: ", camp.name)
-		var spawn_area = camp.get_node_or_null("SpawnArea") as Polygon2D
-		if spawn_area:
-			print("  - SpawnArea: ", spawn_area.polygon.size(), " points | Visible: ", spawn_area.visible)
-			# Test if a position can be generated
-			var test_pos = cat_manager.get_random_position_in_polygon(spawn_area.polygon, spawn_area.global_position)
-			print("  - Test position: ", test_pos)
-		else:
-			print("  - No SpawnArea found!")
-	
-	print("=== END TEST ===")
-
-# script for camp switching mechanic
-func _on_switchcamp_pressed():
-	print("Switch Camp pressed")
-	
-	var cat_managers = get_tree().get_nodes_in_group("cat_managers")
-	if cat_managers.is_empty():
-		return
-	
-	var cat_manager = cat_managers[0] as CatManager
-	
-	# Get available camps
-	var available_camps = []
-	for camp in cat_manager.camp_holder.get_children():
-		available_camps.append(camp.name)
-	
-	if available_camps.is_empty():
-		print("No camps available to switch to")
-		return
-	
-	# Switch to a random camp
-	var random_camp = available_camps[randi() % available_camps.size()]
-	cat_manager.switch_current_camp(random_camp)
-
-func _on_dialoguetester_pressed():
-	print("DialogueTester pressed - running dialogue tests")
-	var template = "{{subj}} {{verb:go}} hunting and {{subj}} {{verb:find}} a rabbit. {{subj}} {{verb:eat}} it quickly."
-
-	var dialogue_veil = Traits.fill_dialogue(template, "veil")
-	print("Veil: ", dialogue_veil)
-	
-	var dialogue_bloom = Traits.fill_dialogue(template, "bloom")
-	print("Bloom: ", dialogue_bloom)
-	
-	var dialogue_stone = Traits.fill_dialogue(template, "stone")
-	print("Stone: ", dialogue_stone)
-	
-	var dialogue_solstice = Traits.fill_dialogue(template, "solstice")
-	print("Solstice: ", dialogue_solstice)
-	
-	var dialogue_cinders = Traits.fill_dialogue(template, "cinders")
-	print("Cinders: ", dialogue_cinders)
-	
-	var dialogue_ashes = Traits.fill_dialogue(template, "ashes")
-	print("Ashes: ", dialogue_ashes)
+		push_warning("No CatManager found!")
+		return null
+	return cat_managers[0] as CatManager
+#endregion
 
 
 # extra code concepts

@@ -1,6 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://di5qd5vd0l7u7"]
+[gd_scene load_steps=20 format=3 uid="uid://di5qd5vd0l7u7"]
 
-[ext_resource type="Script" uid="uid://cueu8pwfk7k54" path="res://scenes/ColonyView.gd" id="1_a0bga"]
+[ext_resource type="Script" uid="uid://cueu8pwfk7k54" path="res://scripts/ColonyView.gd" id="1_a0bga"]
 [ext_resource type="PackedScene" uid="uid://bs13fm218nhyk" path="res://scenes/Camps.tscn" id="1_slrft"]
 [ext_resource type="Texture2D" uid="uid://p7325v08yupw" path="res://resources/ui/LIGHT/LIGHTmainborder.png" id="2_y81b7"]
 [ext_resource type="Texture2D" uid="uid://cbgkoueu7maod" path="res://resources/ui/LIGHT/LIGHTtopbar.png" id="3_id520"]
@@ -10,9 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://bscg3qw4u3qer" path="res://resources/ui/LIGHT/LIGHTtopbarRIGHT.png" id="6_ku7un"]
 [ext_resource type="FontFile" uid="uid://bd5jlefpj0cvq" path="res://resources/ui/runescape_uf.ttf" id="6_vcqf4"]
 [ext_resource type="Texture2D" uid="uid://4bpdv0twh4oc" path="res://resources/ui/LIGHT/LIGHTmainSETTING1.png" id="9_p6vrc"]
-[ext_resource type="Script" uid="uid://k1wekwtpoic1" path="res://scripts/SettingsButton.gd" id="10_mrw3o"]
+[ext_resource type="Script" uid="uid://co2oq5iga75l3" path="res://scripts/OpenUI.gd" id="10_pw51l"]
 [ext_resource type="Texture2D" uid="uid://b7jwft4nwcat6" path="res://resources/ui/LIGHT/LIGHTmainSETTING2.png" id="11_4p363"]
-[ext_resource type="PackedScene" uid="uid://car2uk10l6ore" path="res://scenes/SettingsScene.tscn" id="12_6pj6d"]
+[ext_resource type="Texture2D" uid="uid://bjbah7ybu7snf" path="res://resources/ui/LIGHT/LIGHTarrow1.png" id="13_e6vy8"]
+[ext_resource type="Texture2D" uid="uid://dynm253ec4jep" path="res://resources/ui/LIGHT/LIGHTarrow2.png" id="13_ebtgb"]
+[ext_resource type="Script" uid="uid://dvxj426qemfm4" path="res://scripts/CloseUI.gd" id="13_l1qm1"]
 [ext_resource type="Script" uid="uid://cjdktr5elex5a" path="res://scripts/DebugButtons.gd" id="13_pw51l"]
 [ext_resource type="Script" uid="uid://royst32afwvg" path="res://scripts/CatManager.gd" id="14_pw51l"]
 [ext_resource type="PackedScene" uid="uid://b0ec2nw6t2vxs" path="res://scenes/Cat.tscn" id="15_a0bga"]
@@ -147,10 +149,24 @@ offset_right = 1152.0
 offset_bottom = 104.0
 texture_normal = ExtResource("9_p6vrc")
 stretch_mode = 0
-script = ExtResource("10_mrw3o")
+script = ExtResource("10_pw51l")
 idle_texture = ExtResource("9_p6vrc")
 active_texture = ExtResource("11_4p363")
-settings_scene = ExtResource("12_6pj6d")
+action_type = "overlay"
+target = "settings"
+
+[node name="BackButton" type="TextureButton" parent="SharedUIContainer"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 48.0
+offset_right = 104.0
+offset_bottom = 104.0
+texture_normal = ExtResource("13_e6vy8")
+stretch_mode = 0
+script = ExtResource("13_l1qm1")
+idle_texture = ExtResource("13_e6vy8")
+active_texture = ExtResource("13_ebtgb")
+is_exit_button = true
 
 [node name="DebugButtons" type="Control" parent="SharedUIContainer" node_paths=PackedStringArray("timeskip_button", "spawncat_button", "dialoguetester_button")]
 anchors_preset = 0

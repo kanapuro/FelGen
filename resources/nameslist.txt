@@ -2106,6 +2106,7 @@ Ladybug
 Laevin
 Laika
 Laila
+Laine
 Lakota
 Laksha
 Lakshmi
@@ -2113,6 +2114,7 @@ Laku
 Lam
 Lan
 Lance
+Lane
 Lap-man
 Lapis
 Larimar
@@ -2204,6 +2206,7 @@ Lorado
 Loren
 Loreth
 Lorien
+Loser
 Lou
 Louie
 Louis
@@ -4273,6 +4276,7 @@ William
 Willian
 Wilma
 Wing-heng
+Winner
 Winnfield
 Winry
 Wishbone

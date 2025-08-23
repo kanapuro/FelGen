@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://car2uk10l6ore"]
+[gd_scene load_steps=5 format=3 uid="uid://car2uk10l6ore"]
 
 [ext_resource type="Texture2D" uid="uid://dg3o57hoy7eel" path="res://resources/ui/LIGHT/LIGHTbackground.png" id="1_0m1qb"]
-[ext_resource type="Script" uid="uid://cl5ortkotgont" path="res://scripts/SettingsScene.gd" id="1_8limm"]
+[ext_resource type="Texture2D" uid="uid://bjbah7ybu7snf" path="res://resources/ui/LIGHT/LIGHTarrow1.png" id="2_d6yml"]
+[ext_resource type="Script" uid="uid://dvxj426qemfm4" path="res://scripts/CloseUI.gd" id="3_d6yml"]
+[ext_resource type="Texture2D" uid="uid://dynm253ec4jep" path="res://resources/ui/LIGHT/LIGHTarrow2.png" id="4_5n61g"]
 
 [node name="SettingsPage" type="Control"]
 custom_minimum_size = Vector2(1200, 1000)
@@ -9,7 +11,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_8limm")
 
 [node name="Background" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(1200, 1000)
@@ -28,10 +29,14 @@ grow_vertical = 2
 texture = ExtResource("1_0m1qb")
 stretch_mode = 4
 
-[node name="BackButton" type="Button" parent="Background"]
+[node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 14.0
-offset_right = 130.0
-offset_bottom = 61.0
-text = "<- BACK"
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 80.0
+offset_bottom = 80.0
+texture_normal = ExtResource("2_d6yml")
+stretch_mode = 0
+script = ExtResource("3_d6yml")
+idle_texture = ExtResource("2_d6yml")
+active_texture = ExtResource("4_5n61g")

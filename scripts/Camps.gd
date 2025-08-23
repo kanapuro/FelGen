@@ -1,29 +1,46 @@
 extends Control
 class_name Camps
 
-# Change the variable name to avoid shadowing
-@onready var camp_manager = get_tree().get_first_node_in_group("cat_managers") as CatManager
+#region Constants
+const CAMP_GROUP := "camps"
+const CAT_MANAGER_GROUP := "cat_managers"
+#endregion
 
+#region Node References
+@onready var camp_manager: CatManager = get_tree().get_first_node_in_group(CAT_MANAGER_GROUP)
+@onready var spawn_area: Polygon2D = get_node_or_null("SpawnArea")
+#endregion
+
+#region Lifecycle
 func _ready():
-	add_to_group("camps")
-	
+	_initialize_camp()
+	_setup_spawn_area()
+
+func _initialize_camp():
+	add_to_group(CAMP_GROUP)
 	print("Camp '", name, "' added to groups: ", get_groups())
-	
-	# Check if SpawnArea exists
-	var spawn_area = get_node_or_null("SpawnArea") as Polygon2D
+
+func _setup_spawn_area():
 	if spawn_area:
-		spawn_area.visible = false  # Ensure it's always hidden
+		spawn_area.visible = false
 		print("SpawnArea hidden in: ", name)
+#endregion
 
-func spawn_cat_in_camp(camp_name: String, nick: String = "Unnamed", gender: String = "unknown"):
-	if camp_manager:  # Use the renamed variable
-		camp_manager.spawn_cat(camp_name, nick, gender)
-	else:
-		push_error("CatManager node not found in camp!")
+#region Public API
+func spawn_cat_in_camp(camp_name: String, nick: String = "Unnamed", gender: String = "unknown") -> void:
+	if not camp_manager:
+		push_error("CatManager not found in camp '%s'!" % camp_name)
+		return
+	
+	camp_manager.spawn_cat(camp_name, nick, gender)
 
-func time_skip(months: int = 1):
-	if camp_manager:  # Use the renamed variable
-		camp_manager.age_all_cats(months)
+func time_skip(months: int = 1) -> void:
+	if not camp_manager:
+		push_error("CatManager not found for time skip!")
+		return
+	
+	camp_manager.age_all_cats(months)
 
-func initialize_camp(camp_name: String):
-	name = camp_name  # Set the actual node name
+func initialize_camp(camp_name: String) -> void:
+	name = camp_name
+#endregion
