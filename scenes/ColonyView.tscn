@@ -168,7 +168,7 @@ idle_texture = ExtResource("13_e6vy8")
 active_texture = ExtResource("13_ebtgb")
 is_exit_button = true
 
-[node name="DebugButtons" type="Control" parent="SharedUIContainer" node_paths=PackedStringArray("timeskip_button", "spawncat_button", "dialoguetester_button")]
+[node name="DebugButtons" type="Control" parent="SharedUIContainer" node_paths=PackedStringArray("timeskip_button", "spawncat_button", "dialoguetester_button", "savetest_button", "open_save_dir_button")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -176,6 +176,8 @@ script = ExtResource("13_pw51l")
 timeskip_button = NodePath("Timeskip")
 spawncat_button = NodePath("SpawnCat")
 dialoguetester_button = NodePath("DialogueTester")
+savetest_button = NodePath("SaveTest")
+open_save_dir_button = NodePath("SaveDirectory")
 
 [node name="Timeskip" type="Button" parent="SharedUIContainer/DebugButtons"]
 layout_mode = 0
@@ -200,6 +202,22 @@ offset_top = 912.0
 offset_right = 1188.0
 offset_bottom = 943.0
 text = "dialogue output"
+
+[node name="SaveTest" type="Button" parent="SharedUIContainer/DebugButtons"]
+layout_mode = 0
+offset_left = 1090.0
+offset_top = 879.0
+offset_right = 1187.0
+offset_bottom = 910.0
+text = "SAVE GAME"
+
+[node name="SaveDirectory" type="Button" parent="SharedUIContainer/DebugButtons"]
+layout_mode = 0
+offset_left = 824.0
+offset_top = 960.0
+offset_right = 960.0
+offset_bottom = 992.0
+text = "save directory"
 
 [node name="CatManager" type="Node" parent="." node_paths=PackedStringArray("camp_holder")]
 script = ExtResource("14_pw51l")

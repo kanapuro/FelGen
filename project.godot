@@ -13,11 +13,12 @@ config_version=5
 config/name="FelGen"
 config/version="0.3.4.0"
 run/main_scene="uid://c3060v0xiijx4"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 
 [autoload]
 
 SceneManager="*res://scripts/SceneManager.gd"
+SaveManager="*res://scripts/SaveManager.gd"
 
 [display]
 

@@ -43,6 +43,9 @@ var current_hovered := -1
 
 #region Initialization
 func _ready():
+	print("🔍 StartMenu - Checking for SaveManager:")
+	print("  Has /root/SaveManager: ", has_node("/root/SaveManager"))
+	
 	_initialize_ui()
 	_setup_button_system()
 	_setup_contributions_button()
@@ -154,8 +157,15 @@ func _gui_input(event: InputEvent):
 
 #region Button Actions
 func _handle_button_action(index: int):
+	print("🔄 Button action triggered for index: ", index)  # ADD THIS
+	
 	match index:
+		0: # ContinuePlayButton
+			print("🎯 Continue game button pressed")
+			await get_tree().create_timer(0.3).timeout
+			continue_game()
 		1: # NewPlayButton
+			print("🎯 New game button pressed")  # ADD THIS
 			await get_tree().create_timer(0.3).timeout
 			start_new_game()
 		3: # CreditsButton
@@ -173,6 +183,7 @@ func start_new_game():
 	var camp_names = ["MeadowCampBurrow"]
 	var random_camp = camp_names[randi() % camp_names.size()]
 	
+	# Continue with original flow FIRST
 	var file = FileAccess.open("user://pending_camp.dat", FileAccess.WRITE)
 	if file:
 		file.store_string(random_camp)
@@ -180,6 +191,51 @@ func start_new_game():
 		file.close()
 	
 	SceneManager.go_to_colony_view()
+	
+	# Wait for colony to load, then create AND save the world
+	await get_tree().create_timer(0.5).timeout
+	
+	print("🕒 World creation timer finished - attempting to create world...")  # ADD THIS
+	
+	# Create and save the world
+	if has_node("/root/SaveManager"):
+		print("✅ SaveManager found for world creation")  # ADD THIS
+		var save_manager = get_node("/root/SaveManager") as SaveManager
+		if save_manager and save_manager.has_method("save_game"):
+			var world_name = "New Clan " + Time.get_datetime_string_from_system().replace(":", ".")
+			print("🎯 Attempting to create world: ", world_name)  # ADD THIS
+			if save_manager.save_game(world_name):
+				print("✅ New world created and saved: ", world_name)
+				print("🌍 World ID: ", save_manager.current_world_id)
+			else:
+				print("⚠️ Could not create new world")
+		else:
+			print("❌ SaveManager missing save_game method")
+	else:
+		print("❌ SaveManager not found for world creation")
+
+func continue_game():
+	print("Continuing game")
+	
+	if has_node("/root/SaveManager"):
+		var save_manager = get_node("/root/SaveManager") as SaveManager
+		if save_manager and save_manager.has_method("get_saved_games") and save_manager.has_method("load_game"):
+			var saves = save_manager.get_saved_games()  # FIXED: Added this missing line!
+			if not saves.is_empty():
+				# Load by WORLD ID, not name
+				var most_recent = saves[0]
+				if save_manager.load_game(most_recent.world_id):  # ✅ Using world_id
+					print("✅ Loaded saved game: ", most_recent.world_name)
+					SceneManager.go_to_colony_view()
+					return
+				else:
+					print("❌ Failed to load saved game")
+			else:
+				print("❌ No saved games found")
+	
+	# Fallback: start new game if no saves or load failed
+	print("No saved games found, starting new game instead")
+	start_new_game()
 
 func exit_game():
 	print("Exiting game...")

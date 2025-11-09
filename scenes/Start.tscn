@@ -185,6 +185,7 @@ label_settings = SubResource("LabelSettings_h1lxu")
 
 [node name="Contributions" type="TextureRect" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 640.0
 offset_top = 256.0
 offset_right = 1152.0

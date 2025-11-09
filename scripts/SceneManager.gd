@@ -43,8 +43,9 @@ func _load_screen_actual(screen_key: String) -> bool:
 
 func _clear_existing_screens():
 	for child in get_tree().root.get_children():
-		if child != self:
-			child.queue_free()
+		if child == self or child is SaveManager or child is CatManager:
+			continue
+		child.queue_free()
 
 func _load_new_screen(screen_key: String) -> bool:
 	var screen_scene := load(SCREENS[screen_key])
